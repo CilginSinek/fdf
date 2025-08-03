@@ -1,0 +1,38 @@
+# .github/workflows/workflow.yml
+
+name: Libft Tester
+
+# Workflow, "main" dalına push edildiğinde ve manuel tetiki (workflow_dispatch) durumunda çalışacak
+on:
+  workflow_dispatch:
+
+jobs:
+  test_libft:
+    name: Run libftTester
+    runs-on: ubuntu-latest
+
+    env:
+      TERM: xterm
+
+    steps:
+      # 1. Reponu checkout et
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Valgrind ve gerekli paketleri yükle
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y valgrind git build-essential
+
+      # 3. Tripouille libftTester'ı klonla
+      - name: Clone libftTester
+        run: |
+          git clone https://github.com/Tripouille/libftTester.git libftTester
+
+      # 4. libftTester ile hem mandatory hem de bonus testlerini çalıştır
+      #    Burada LIBFT_PATH değişkenini, içinde bulunduğumuz (checkout edilmiş) repo kök dizinine
+      #    (github.workspace) işaret edecek şekilde ayarlıyoruz.
+      - name: Run mandatory + bonus tests
+        run: |
+          make a LIBFT_PATH="${{ github.workspace }}" -C libftTester
