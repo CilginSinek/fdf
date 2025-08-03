@@ -1,7 +1,6 @@
 #ifndef FDF_H
 #define FDF_H
 
-#include "libft/libft.h"
 #include "minilibx-linux/mlx.h"
 #include <fcntl.h>
 #include "get_next_line/get_next_line.h"

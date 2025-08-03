@@ -8,6 +8,7 @@
         "minitalk.h": "c",
         "push_swap.h": "c",
         "libft.h": "c",
-        "get_next_line_bonus.h": "c"
+        "get_next_line_bonus.h": "c",
+        "stdio.h": "c"
     }
 }
