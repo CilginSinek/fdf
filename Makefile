@@ -2,7 +2,7 @@ NAME=fdf
 SRC= main.c utils.c
 OBJ=$(SRC:.c=.o)
 CC=cc
-CFLAGS=-Wall -Wextra -Werror
+CFLAGS=-Wall -Wextra -Werror -g
 MINILIBXDIR= ./minilibx-linux
 LIBFTDIR= ./libft
 GET_NEXT_LINE_DIR= ./get_next_line

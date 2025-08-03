@@ -15,23 +15,36 @@ int append_2d_point_array(t_point ***map_data, t_point *new_row, int height)
     t_point **temp;
     int i;
 
+    if (!*map_data)
+    {
+        *map_data = (t_point **)ft_calloc(1, sizeof(t_point *));
+        if (!*map_data)
+            return (-1);
+        (*map_data)[0] = new_row;
+        return (0);
+    }
+
     temp = (t_point **)ft_calloc((height + 1), sizeof(t_point *));
     if (!temp)
         return (-1);
-    
+
     for (i = 0; i < height; i++)
         temp[i] = (*map_data)[i];
 
     temp[height] = new_row;
+
     free(*map_data);
     *map_data = temp;
+
     return (0);
 }
+
 
 int ft_get_line_length(char *line)
 {
     char **tmp;
     int length;
+    int i;
 
     tmp = ft_split(line, ' ');
     if (!tmp)
@@ -39,6 +52,12 @@ int ft_get_line_length(char *line)
     length = 0;
     while (tmp[length] && tmp[length][0] != '\n')
         length++;
+    i = 0;
+    while(tmp[i]) // Free remaining values
+    {
+        free(tmp[i]);
+        i++;
+    }
     free(tmp);
     return (length);
 }
@@ -71,6 +90,12 @@ int set_map_line(char *line, t_point *point, int y)
         point[i].color = get_color(values[i]); // Default color, can be changed later
         i++;
     }
+    i = 0;
+    while (values[i]) // Free remaining values
+    {
+        free(values[i]);
+        i++;
+    }
     free(values);
     return (i); // Return number of points set
 }
@@ -98,16 +123,12 @@ int read_map_file(const char *filename, t_point ***map_data)
             close(fd);
             return (-1);
         }
-        printf("Line %d: %s, length=%d\n", y, line, ft_get_line_length(line));
         points = (t_point *)ft_calloc(i + 1, sizeof(t_point));
         set_map_line(line, points, y);
-        append_2d_point_array(map_data, points, y);
-        for (int j = 0; j < i; j++)
-            printf("Point[%d][%d]: x=%d, y=%d, z=%d, color=0x%X\n", y, j, points[j].x, points[j].y, points[j].z, points[j].color);
         free(line);
+        append_2d_point_array(map_data, points, y);
         y++;
         line = get_next_line(fd);
-        printf("Next line read: %s\n", line == NULL ? "NULL" : line);
     }
     close(fd);
     return (0);

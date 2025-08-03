@@ -28,6 +28,7 @@ int	main(int argc, char *argv[])
 {
     t_point **map_data;
 
+    map_data = NULL;
     if (argc != 2)
     {
         ft_putstr_fd("Usage: ./fdf <map_file>\n", 1);
@@ -41,6 +42,12 @@ int	main(int argc, char *argv[])
         ft_putstr_fd("Error reading map file.\n", 2);
         return (1);
     }
-    print_map(map_data, 10, 10); // Assuming height and width are known or passed
+    //print_map(map_data, 10, 10);
+    // Free allocated memory for map_data
+    for (int i = 0; i < 10; i++)
+    {
+        free(map_data[i]);
+    }
+    free(map_data);
     return (0);
 }
