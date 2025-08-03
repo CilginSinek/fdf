@@ -1,14 +1,6 @@
 #include "fdf.h"
 
-// int close_window(t_fdf *fdf)
-// {
-//     if (fdf->win_ptr)
-//     {
-//         mlx_destroy_window(fdf->mlx_ptr, fdf->win_ptr);
-//         fdf->win_ptr = NULL;
-//     }
-//     return (0);
-// }
+
 
 int append_2d_point_array(t_point ***map_data, t_point *new_row, int height)
 {

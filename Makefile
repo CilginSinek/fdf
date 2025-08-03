@@ -13,8 +13,8 @@ MINILIBX=$(MINILIBXDIR)/libmlx.a
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT) $(GET_NEXT_LINE)
-	$(CC) $(CFLAGS) -o $@ $^  $(LIBFT) $(GET_NEXT_LINE)
+$(NAME): $(OBJ) $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX)
+	$(CC) $(CFLAGS) -o $@ $^  $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX) -lm -lX11 -lXext -lpthread
 
 $(MINILIBX):
 	make -C $(MINILIBXDIR)

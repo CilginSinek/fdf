@@ -1,5 +1,12 @@
 #include "fdf.h"
 
+int	close_window(void *param)
+{
+	(void)param;
+	exit(0);
+	return (0);
+}
+
 void print_map(t_point **map_data, int height, int width)
 {
     int i, j;
@@ -26,7 +33,9 @@ void print_map(t_point **map_data, int height, int width)
 
 int	main(int argc, char *argv[])
 {
+    t_fdf fdf;
     t_point **map_data;
+
 
     map_data = NULL;
     if (argc != 2)
@@ -42,7 +51,25 @@ int	main(int argc, char *argv[])
         ft_putstr_fd("Error reading map file.\n", 2);
         return (1);
     }
-    //print_map(map_data, 10, 10);
+    fdf.map = map_data;
+    fdf.width = 10;
+    fdf.height = 10;
+    fdf.mlx_ptr = mlx_init();
+    fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, 800, 600, "FDF Window");
+
+    if (!fdf.mlx_ptr || !fdf.win_ptr)
+    {
+        ft_putstr_fd("Error initializing MLX.\n", 2);
+        return (1);
+    }
+	// X'e basınca kapansın
+	mlx_hook(fdf.win_ptr, 17, 0, close_window, NULL);
+
+	// ESC tuşuna basınca da çıkmak isterseniz
+	mlx_hook(fdf.win_ptr, 2, 1L << 0, close_window, NULL);
+    mlx_loop(fdf.mlx_ptr);
+
+
     // Free allocated memory for map_data
     for (int i = 0; i < 10; i++)
     {

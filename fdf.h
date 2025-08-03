@@ -6,15 +6,6 @@
 #include "get_next_line/get_next_line.h"
 #include <stdio.h>
 
-typedef struct s_fdf
-{
-    void    *mlx_ptr;
-    void    *win_ptr;
-    int     **map;
-    int     width;
-    int     height;
-}   t_fdf;
-
 typedef struct s_point
 {
     int x;
@@ -22,6 +13,15 @@ typedef struct s_point
     int z;
     unsigned int color;
 }   t_point;
+
+typedef struct s_fdf
+{
+    void    *mlx_ptr;
+    void    *win_ptr;
+    t_point     **map;
+    int     width;
+    int     height;
+}   t_fdf;
 
 int read_map_file(const char *filename, t_point ***map_data);
 
