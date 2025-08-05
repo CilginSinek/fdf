@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi_base.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/05 17:51:21 by iduman            #+#    #+#             */
+/*   Updated: 2025/08/05 17:51:51 by iduman           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 static int	strlenspc(const char *str)
@@ -27,10 +39,10 @@ int	ft_atoi_base(const char *str, const char *base)
 		i++;
 	}
 	while (ft_strchr(base, str[i]) != NULL)
-    {
-        digit = ft_strchr(base, str[i]) - base;
-        if (digit < 0 || digit >= (int)ft_strlen(base))
-            return (0); // Invalid character for the base
+	{
+		digit = ft_strchr(base, str[i]) - base;
+		if (digit < 0 || digit >= (int)ft_strlen(base))
+			return (0);
 		result = result * ft_strlen(base) + digit;
 		i++;
 	}
