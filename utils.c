@@ -1,4 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 17:59:04 by iduman            #+#    #+#             */
+/*   Updated: 2025/08/04 17:59:04 by iduman           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
+
+
+void	error_prepare(char *message, void *free_list, int free_size, int fd)
+{
+
+}
 
 
 
@@ -15,19 +33,14 @@ int append_2d_point_array(t_point ***map_data, t_point *new_row, int height)
         (*map_data)[0] = new_row;
         return (0);
     }
-
     temp = (t_point **)ft_calloc((height + 1), sizeof(t_point *));
     if (!temp)
         return (-1);
-
     for (i = 0; i < height; i++)
         temp[i] = (*map_data)[i];
-
     temp[height] = new_row;
-
     free(*map_data);
     *map_data = temp;
-
     return (0);
 }
 
@@ -61,7 +74,7 @@ int get_color(char *value)
         char *color_str = ft_strchr(value, ',') + 1;
         return (ft_atoi_base(color_str, "0123456789ABCDEF"));
     }
-    return (0xFFFFFF); // Default color if no color specified
+    return (0xFFFFFF);
 }
 
 int set_map_line(char *line, t_point *point, int y)
@@ -92,7 +105,7 @@ int set_map_line(char *line, t_point *point, int y)
     return (i); // Return number of points set
 }
 
-int read_map_file(const char *filename, t_point ***map_data)
+int read_map_file(const char *filename, fdf_t *fdf)
 {
     int fd;
     char *line;
@@ -106,23 +119,70 @@ int read_map_file(const char *filename, t_point ***map_data)
     y = 0;
     line = get_next_line(fd);
     i = ft_get_line_length(line);
+    fdf->width = i;
     while (line != NULL)
     {
         if(i != ft_get_line_length(line))
         {
             ft_putstr_fd("Error: Inconsistent line lengths in map file.\n", 2);
+            if(*fdf->map)
+            {
+                for (int j = 0; j < y; j++)
+                    free(fdf->map[j]);
+                free(fdf->map);
+            }
             free(line);
             close(fd);
             return (-1);
         }
         points = (t_point *)ft_calloc(i + 1, sizeof(t_point));
-        set_map_line(line, points, y);
+        if(!points)
+        {
+            ft_putstr_fd("Error: Memory allocation failed.\n", 2);
+            if(*fdf->map)
+            {
+                for (int j = 0; j < y; j++)
+                    free(fdf->map[j]);
+                free(fdf->map);
+            }
+            free(line);
+            close(fd);
+            return (-1);
+        }
+        if(set_map_line(line, points, y) == -1)
+        {
+            ft_putstr_fd("Error: Failed to set map line.\n", 2);
+            free(points);
+            if(*fdf->map)
+            {
+                for (int j = 0; j < y; j++)
+                    free(fdf->map[j]);
+                free(fdf->map);
+            }
+            free(line);
+            close(fd);
+            return (-1);
+        }
         free(line);
-        append_2d_point_array(map_data, points, y);
+        if(append_2d_point_array(&(fdf->map), points, y) == -1)
+        {
+            ft_putstr_fd("Error: Failed to append to map data.\n", 2);
+            free(points);
+            if(*fdf->map)
+            {
+                for (int j = 0; j < y; j++)
+                    free(fdf->map[j]);
+                free(fdf->map);
+            }
+            close(fd);
+            return (-1);
+        }
         y++;
         line = get_next_line(fd);
     }
+    fdf->height = y;
     close(fd);
     return (0);
 }
 
+//* En son free kısımlarını otomatik fonksiyon olarak yazacaktım
