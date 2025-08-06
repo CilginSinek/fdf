@@ -1,66 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/04 17:59:08 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/05 18:15:34 by iduman           ###   ########.fr       */
+/*   Created: 2025/08/06 06:30:10 by iduman            #+#    #+#             */
+/*   Updated: 2025/08/06 06:30:10 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	free_map(t_fdf *fdf)
-{
-	int		i;
-
-	if (fdf->map)
-	{
-		i = 0;
-		while (i < fdf->height)
-		{
-			free(fdf->map[i]);
-			i++;
-		}
-		free(fdf->map);
-		fdf->map = NULL;
-	}
-}
-
-void	free_mlx(t_fdf *fdf)
-{
-	if (fdf->mlx_ptr)
-	{
-		if (fdf->win_ptr)
-			mlx_destroy_window(fdf->mlx_ptr, fdf->win_ptr);
-		mlx_destroy_display(fdf->mlx_ptr);
-		free(fdf->mlx_ptr);
-		fdf->mlx_ptr = NULL;
-		fdf->win_ptr = NULL;
-	}
-}
-
-int	close_window(t_fdf *fdf)
-{
-	free_map(fdf);
-	free_mlx(fdf);
-	exit(0);
-	return (0);
-}
-
-int	key_press(int keycode, void *param)
-{
-	t_fdf	*fdf;
-
-	if (!param)
-		return (0);
-	fdf = (t_fdf *)param;
-	if (keycode == 65307)
-		close_window(fdf);
-	return (0);
-}
 
 int	main(int argc, char *argv[])
 {
@@ -69,6 +19,7 @@ int	main(int argc, char *argv[])
 	fdf.map = NULL;
 	if (argc != 2)
 		return (ft_putstr_fd("Usage: ./fdf <map_file>\n", 2), 1);
+    // if file type is not .fdf and its .fdfs exec other read_map_file function for video
 	if (read_map_file(argv[1], &fdf) < 0)
 		return (1);
 	fdf.mlx_ptr = mlx_init();

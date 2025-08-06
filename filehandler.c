@@ -39,6 +39,8 @@ int	read_map_file(const char *filename, t_fdf *fdf)
 	t_point	*points;
 
 	points = NULL;
+	if (ft_strnstr(filename, ".fdf", ft_strlen(filename)) == NULL)
+		return (ft_putstr_fd("Error: Invalid file type. Only .fdf.\n", 2), -1);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (-1);
