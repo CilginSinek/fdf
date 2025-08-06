@@ -12,6 +12,16 @@
 
 #include "fdf.h"
 
+int	read_files(t_fdf *fdf, char *filename)
+{
+	if (ft_strstr(filename, ".fdf"))
+		return (read_map_file(filename, fdf), 1);
+	else if (ft_strstr(filename, ".fdfs"))
+		return (read_video_file(filename, fdf), 1);
+	else
+		return (ft_putstr_fd("Error: Unsupported file type.\n", 2), 0);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_fdf		fdf;
@@ -20,7 +30,7 @@ int	main(int argc, char *argv[])
 	if (argc != 2)
 		return (ft_putstr_fd("Usage: ./fdf <map_file>\n", 2), 1);
     // if file type is not .fdf and its .fdfs exec other read_map_file function for video
-	if (read_map_file(argv[1], &fdf) < 0)
+	if (read_files(&fdf, argv[1]) < 0)
 		return (1);
 	fdf.mlx_ptr = mlx_init();
 	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, 1200, 800, "FDF Window");
