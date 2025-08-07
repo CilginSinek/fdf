@@ -1,5 +1,5 @@
 NAME=fdf
-SRC= main.c utils.c filehandler.c
+SRC= main.c utils.c filehandler.c drawmap.c exit_utils.c
 OBJ=$(SRC:.c=.o)
 CC=cc
 CFLAGS=-Wall -Wextra -Werror -g

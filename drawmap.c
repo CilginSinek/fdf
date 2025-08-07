@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawmap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 06:11:00 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/06 06:11:00 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/07 14:58:46 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,38 +43,37 @@ static void	draw_line(t_point p1, t_point p2, t_fdf *fdf)
 	}
 }
 
-static void project_point(t_point *point)
+static t_point project_point(t_point point)
 {
-	int		x;
-	int		y;
+    t_point projected;
+    int scale = 20;
+    int offset_x = 600;
+    int offset_y = 400;
 
-	int scale = 10;
-	int offset_x = 800;
-	int offset_y = 600;
-
-	x = (point->x - point->y) * cos(30 * (M_PI / 180)) * scale;
-	y = (point->x + point->y) * sin(30 * (M_PI / 180)) - point->z;
-	point->x = x + offset_x;
-	point->y = y + offset_y;
+    projected.x = (point.x - point.y) * cos(30 * (M_PI / 180)) * scale + offset_x;
+    projected.y = ((point.x + point.y) * sin(30 * (M_PI / 180)) - point.z) * scale + offset_y;
+    projected.z = point.z;
+    projected.color = point.color;
+    return projected;
 }
 
 void	draw_map(t_fdf *fdf)
 {
-	int	x;
-	int	y;
+    int	x;
+    int	y;
+	t_point p;
 
-	y = 0;
-	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
-	while (y < fdf->height)
-	{
-		x = 0;
-		while (x < fdf->width)
-		{
-			project_point(&fdf->map[y][x]);
-			draw_line(fdf->map[y][x], fdf->map[y][x + 1], fdf);
-			draw_line(fdf->map[y][x], fdf->map[y + 1][x], fdf);
-			x++;
-		}
-		y++;
-	}
+    mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
+    for (y = 0; y < fdf->height; y++)
+    {
+        for (x = 0; x < fdf->width; x++)
+        {
+			p = project_point(fdf->map[y][x]);
+			mlx_pixel_put(fdf->mlx_ptr, fdf->win_ptr, p.x, p.y, p.color);
+            if (x < fdf->width - 1)
+                draw_line(project_point(fdf->map[y][x]), project_point(fdf->map[y][x + 1]), fdf);
+            if (y < fdf->height - 1)
+                draw_line(project_point(fdf->map[y][x]), project_point(fdf->map[y + 1][x]), fdf);
+        }
+    }
 }

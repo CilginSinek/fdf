@@ -21,6 +21,7 @@ int	main(int argc, char *argv[])
 		return (ft_putstr_fd("Usage: ./fdf <map_file>\n", 2), 1);
 	if (read_map_file(argv[1], &fdf) < 0)
 		return (1);
+	//set_horizon(&fdf);
 	fdf.mlx_ptr = mlx_init();
 	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, 1200, 800, "FDF Window");
 	if (!fdf.mlx_ptr || !fdf.win_ptr)

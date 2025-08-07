@@ -22,6 +22,18 @@ static int	strlenspc(const char *str)
 	return (len);
 }
 
+int	get_digit(const char *base, char c)
+{
+	int	digit;
+
+	digit = -1;
+	if (ft_strchr(base, ft_tolower(c)))
+		digit = ft_strchr(base, ft_tolower(c)) - base;
+	else
+		digit = ft_strchr(base, ft_toupper(c)) - base;
+	return (digit);
+}
+
 int	ft_atoi_base(const char *str, const char *base)
 {
 	int			result;
@@ -38,9 +50,9 @@ int	ft_atoi_base(const char *str, const char *base)
 			a = -1;
 		i++;
 	}
-	while (ft_strchr(base, str[i]) != NULL)
+	while (str[i] && ft_strchr(base, str[i]) != NULL)
 	{
-		digit = ft_strchr(base, str[i]) - base;
+		digit = get_digit(base, str[i]);
 		if (digit < 0 || digit >= (int)ft_strlen(base))
 			return (0);
 		result = result * ft_strlen(base) + digit;

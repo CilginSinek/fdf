@@ -33,6 +33,9 @@ typedef struct s_fdf
 	t_point	**map;
 	int		width;
 	int		height;
+	int		scale;
+	int		offset_x;
+	int		offset_y;
 }	t_fdf;
 
 typedef struct s_line
@@ -50,6 +53,7 @@ void	free_mlx(t_fdf *fdf);
 int		close_window(t_fdf *fdf);
 int		key_press(int keycode, void *param);
 
+//void	set_horizon(t_fdf *fdf);
 int		ep(char *message, t_fdf *fdf, void **free_list, int fd);
 int		append_2d_point_array(t_point ***mp_d, t_point *new_row, int height);
 int		ft_get_line_length(char *line);

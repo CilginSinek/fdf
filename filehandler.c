@@ -58,3 +58,8 @@ int	read_map_file(const char *filename, t_fdf *fdf)
 	close(fd);
 	return (0);
 }
+
+void set_horizon(t_fdf *fdf)
+{
+// this func makes center and scale of the map
+}
