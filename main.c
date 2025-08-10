@@ -6,13 +6,13 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 17:59:08 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/05 18:15:34 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/10 18:49:57 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int expose_hook(t_vars *vars)
+int expose_hook(t_fdf *vars)
 {
 	mlx_clear_window(vars->mlx_ptr, vars->win_ptr);
 	draw_map(vars);

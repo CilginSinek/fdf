@@ -6,7 +6,7 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 17:45:48 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/05 18:04:20 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/10 18:50:29 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	read_map_file(const char *filename, t_fdf *fdf)
 	return (0);
 }
 
-void set_horizon(t_fdf *fdf)
+/* void set_horizon(t_fdf *fdf)
 {
 // this func makes center and scale of the map
 }
+ */

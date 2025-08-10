@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_bonus.c                                        :+:      :+:    :+:   */
+/*   fdf_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:00:47 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/06 21:00:47 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/10 18:54:36 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_BONUX_H
-# define FDF_BONUX_H
-# include "minilibx-linux/mlx.h"
-# include "get_next_line/get_next_line.h"
+#ifndef FDF_BONUS_H
+# define FDF_BONUS_H
+# include "../minilibx-linux/mlx.h"
+# include "../get_next_line/get_next_line.h"
 # include <fcntl.h>
 # include <math.h>
 
@@ -27,8 +27,8 @@ typedef struct s_point
 
 typedef struct s_fdf
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
+	void	**mlx_ptr;
+	void	**win_ptr;
 	t_point	**map;
 	int		width;
 	int		height;
@@ -53,7 +53,5 @@ typedef struct s_fdf_bonus
     struct s_fdf_bonus	*next_frame;
 }	t_fdf_bonus;
 
-
-
-
+int read_video_file(char *filename, t_fdf_bonus *fdf);
 #endif

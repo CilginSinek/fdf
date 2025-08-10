@@ -1,5 +1,7 @@
 NAME=fdf
+NAME_BONUS=fdf_bonus
 SRC= main.c utils.c filehandler.c drawmap.c exit_utils.c
+SRC_BONUS= bonus/main_bonus.c bonus/video_handle_bonus.c
 OBJ=$(SRC:.c=.o)
 CC=cc
 CFLAGS=-Wall -Wextra -Werror -g
@@ -12,6 +14,11 @@ GET_NEXT_LINE=$(GET_NEXT_LINE_DIR)/get_next_line.a
 MINILIBX=$(MINILIBXDIR)/libmlx.a
 
 all: $(NAME)
+
+bonus: $(NAME_BONUS)
+
+$(NAME_BONUS): $(SRC_BONUS) $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX)
+	$(CC) $(CFLAGS) -o $@ $^  $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX) -lm -lX11 -lXext -lpthread -I./bonus
 
 $(NAME): $(OBJ) $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX)
 	$(CC) $(CFLAGS) -o $@ $^  $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX) -lm -lX11 -lXext -lpthread
