@@ -6,7 +6,7 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:00:47 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/10 19:54:26 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/10 20:47:42 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_fdf
 	int		*scale;
 	int		*offset_x;
 	int		*offset_y;
+	int		*rotation;
 }	t_fdf;
 
 typedef struct s_line

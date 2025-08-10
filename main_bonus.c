@@ -6,7 +6,7 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 06:30:10 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/10 19:53:39 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/10 20:55:19 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	init_fdf_bonus(t_fdf_bonus *fdf)
 		exit(EXIT_FAILURE);
 	}
 	fdf->fdf = NULL;
+	fdf->fdf->height = 0;
+	fdf->fdf->width = 0;
 	fdf->next_frame = NULL;
 	fdf->projection = malloc(sizeof(int));
 	*fdf->projection = 0;

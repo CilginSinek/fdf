@@ -68,10 +68,10 @@ int read_video_file(const char *filename, t_fdf_bonus *fdf)
     line = get_next_line(fd);
     if (!line)
         return (ft_putstr_fd("Error: Empty video file.\n", 2), -1);
-    fdf->width = ft_get_line_length(line);
-    if (*fdf->width <= 0)
+    fdf->fdf->width = ft_get_line_length(line);
+    if (fdf->fdf->width <= 0)
         return (free(line), ft_putstr_fd("Error: Invalid video file format.\n", 2), -1);
-    *fdf->height = 0;
+    fdf->fdf->height = 0;
     while (line)
     {
         if(ft_strchr(line, '-') != NULL)
@@ -81,7 +81,7 @@ int read_video_file(const char *filename, t_fdf_bonus *fdf)
             line = get_next_line(fd);
             continue;
         }
-        if(read_map_while(fdf->fdf, line, fd, &fdf->fdf->map[fdf->height]) == -1)
+        if(read_map_while(fdf->fdf, line, fd, &fdf->fdf->map[fdf->fdf->height]) == -1)
             return (-1);
         line = get_next_line(fd);
     }
