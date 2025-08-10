@@ -6,16 +6,17 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:00:47 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/10 18:54:36 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/10 19:54:26 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_BONUS_H
 # define FDF_BONUS_H
-# include "../minilibx-linux/mlx.h"
-# include "../get_next_line/get_next_line.h"
+# include "minilibx-linux/mlx.h"
+# include "get_next_line/get_next_line.h"
 # include <fcntl.h>
 # include <math.h>
+# include <string.h>
 
 typedef struct s_point
 {
@@ -53,5 +54,11 @@ typedef struct s_fdf_bonus
     struct s_fdf_bonus	*next_frame;
 }	t_fdf_bonus;
 
-int read_video_file(char *filename, t_fdf_bonus *fdf);
+int		ep(char *message, t_fdf *fdf, void **free_list, int fd);
+int		append_2d_point_array(t_point ***mp_d, t_point *new_row, int height);
+int		ft_get_line_length(char *line);
+int		get_color(char *value);
+int		set_map_line(char *line, t_point *point, int y);
+int		read_map_file(const char *filename, t_fdf *fdf);
+int read_video_file(const char *filename, t_fdf_bonus *fdf);
 #endif

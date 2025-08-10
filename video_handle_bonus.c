@@ -24,8 +24,8 @@ t_fdf_bonus *create_next_frame(t_fdf_bonus **fdf)
     new_frame->next_frame = NULL;
     new_frame->projection = (*fdf)->projection;
     new_frame->video_mode = (*fdf)->video_mode;
-    *new_frame->fdf->mlx_ptr = *(*fdf)->mlx_ptr;
-    *new_frame->fdf->win_ptr = *(*fdf)->win_ptr;
+    *new_frame->fdf->mlx_ptr = *(*fdf)->fdf->mlx_ptr;
+    *new_frame->fdf->win_ptr = *(*fdf)->fdf->win_ptr;
     new_frame->fdf->width = (*fdf)->fdf->width;
     new_frame->fdf->height = 0;
     new_frame->fdf->offset_x = (*fdf)->fdf->offset_x;
@@ -57,7 +57,7 @@ static int	read_map_while(t_fdf *fdf, char *line, int fd, t_point **points)
 }
 
 
-int read_video_file(char *filename, t_fdf_bonus *fdf)
+int read_video_file(const char *filename, t_fdf_bonus *fdf)
 {
     int fd;
     char *line;
@@ -69,9 +69,9 @@ int read_video_file(char *filename, t_fdf_bonus *fdf)
     if (!line)
         return (ft_putstr_fd("Error: Empty video file.\n", 2), -1);
     fdf->width = ft_get_line_length(line);
-    if (fdf->width <= 0)
+    if (*fdf->width <= 0)
         return (free(line), ft_putstr_fd("Error: Invalid video file format.\n", 2), -1);
-    fdf->height = 0;
+    *fdf->height = 0;
     while (line)
     {
         if(ft_strchr(line, '-') != NULL)

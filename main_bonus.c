@@ -6,23 +6,23 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 06:30:10 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/10 18:55:04 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/10 19:53:39 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_bonus.h"
 
-int	read_files(t_fdf_bonus *fdf, char *filename)
+int	read_files(t_fdf_bonus *fdf,const char *filename)
 {
-	if (ft_strstr(filename, ".fdfs") != NULL)
+	if (strstr(filename, ".fdfs") != NULL)
 	{
 		*(fdf->video_mode) = 1;
 		return (read_video_file(filename, fdf) == 1);
 	}
-	else if (ft_strstr(filename, ".fdf") != NULL)
+	else if (strstr(filename, ".fdf") != NULL)
 	{
 		*(fdf->video_mode) = 0;
-		return (read_map_file(filename, fdf) == 1);
+		return (read_map_file(filename, fdf->fdf) == 1);
 	}
 	else
 	{
@@ -47,7 +47,7 @@ void	init_fdf_bonus(t_fdf_bonus *fdf)
 	fdf->video_mode = malloc(sizeof(int));
 }
 
-int expose_hook(t_vars *vars)
+/* int expose_hook(t_fdf_bonus *vars)
 {
 	mlx_clear_window(*vars->mlx_ptr, *vars->win_ptr);
 	draw_map(vars);
@@ -59,7 +59,7 @@ void init_keyhooks(t_fdf_bonus *fdf)
 	mlx_hook(*fdf->win_ptr, 17, 0, close_window, &fdf);
 	mlx_hook(*fdf->win_ptr, 2, 1L << 0, key_press, &fdf);
 	mlx_expose_hook(*fdf->win_ptr, expose_hook, &fdf);
-}
+} */
 
 int	main(int argc, char *argv[])
 {

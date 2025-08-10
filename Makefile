@@ -1,7 +1,7 @@
 NAME=fdf
 NAME_BONUS=fdf_bonus
 SRC= main.c utils.c filehandler.c drawmap.c exit_utils.c
-SRC_BONUS= bonus/main_bonus.c bonus/video_handle_bonus.c
+SRC_BONUS= main_bonus.c video_handle_bonus.c map_handle_bonus.c utils_bonus.c
 OBJ=$(SRC:.c=.o)
 CC=cc
 CFLAGS=-Wall -Wextra -Werror -g
