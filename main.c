@@ -12,6 +12,13 @@
 
 #include "fdf.h"
 
+int expose_hook(t_vars *vars)
+{
+	mlx_clear_window(vars->mlx_ptr, vars->win_ptr);
+	draw_map(vars);
+	return (0);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_fdf		fdf;
@@ -28,7 +35,7 @@ int	main(int argc, char *argv[])
 		return (ft_putstr_fd("Error: Failed to initialize MLX.\n", 2), 1);
 	mlx_hook(fdf.win_ptr, 17, 0, close_window, &fdf);
 	mlx_hook(fdf.win_ptr, 2, 1L << 0, key_press, &fdf);
-	draw_map(&fdf);
+	mlx_expose_hook(fdf.win_ptr, expose_hook, &fdf);
 	mlx_loop(fdf.mlx_ptr);
 	close_window(&fdf);
 	return (0);

@@ -32,9 +32,9 @@ typedef struct s_fdf
 	t_point	**map;
 	int		width;
 	int		height;
-	int		scale;
-	int		offset_x;
-	int		offset_y;
+	int		*scale;
+	int		*offset_x;
+	int		*offset_y;
 }	t_fdf;
 
 typedef struct s_line
