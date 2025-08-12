@@ -1,4 +1,4 @@
-#include "fdf_bonus.h"
+#include "b_fdf_bonus.h"
 
 static int	read_map_while(t_fdf *fdf, char *line, int fd, t_point **points)
 {

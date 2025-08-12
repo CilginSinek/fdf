@@ -22,17 +22,22 @@ int expose_hook(t_fdf *vars)
 int	main(int argc, char *argv[])
 {
 	t_fdf		fdf;
+	t_img		img;
 
 	fdf.map = NULL;
 	if (argc != 2)
 		return (ft_putstr_fd("Usage: ./fdf <map_file>\n", 2), 1);
 	if (read_map_file(argv[1], &fdf) < 0)
 		return (1);
-	//set_horizon(&fdf);
 	fdf.mlx_ptr = mlx_init();
 	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, 1200, 800, "FDF Window");
 	if (!fdf.mlx_ptr || !fdf.win_ptr)
 		return (ft_putstr_fd("Error: Failed to initialize MLX.\n", 2), 1);
+	fdf.img = &img;
+	fdf.img->img = mlx_new_image(fdf.mlx_ptr, 1200, 800);
+	fdf.img->addr = mlx_get_data_addr(fdf.img->img, &fdf.img->bits_per_pixel, &fdf.img->line_length, &fdf.img->endian);
+	set_horizon(&fdf);
+	draw_map(&fdf);
 	mlx_hook(fdf.win_ptr, 17, 0, close_window, &fdf);
 	mlx_hook(fdf.win_ptr, 2, 1L << 0, key_press, &fdf);
 	mlx_expose_hook(fdf.win_ptr, expose_hook, &fdf);

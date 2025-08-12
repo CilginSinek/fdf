@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_BONUS_H
-# define FDF_BONUS_H
+#ifndef B_FDF_BONUS_H
+# define B_FDF_BONUS_H
 # include "minilibx-linux/mlx.h"
 # include "get_next_line/get_next_line.h"
 # include <fcntl.h>
@@ -25,6 +25,16 @@ typedef struct s_point
 	int				z;
 	unsigned int	color;
 }	t_point;
+
+typedef struct	s_img {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}	t_img;
 
 typedef struct s_fdf
 {

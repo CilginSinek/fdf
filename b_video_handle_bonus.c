@@ -1,4 +1,4 @@
-#include "fdf_bonus.h"
+#include "b_fdf_bonus.h"
 
 //* kopya özellikleri ana framedeki adreslerden geçireceğim;
 void set_next_frame(t_fdf_bonus **fdf, t_fdf_bonus *next_frame)

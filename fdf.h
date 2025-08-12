@@ -18,7 +18,7 @@
 # include <math.h>
 # include <stdio.h>
 
-typedef struct s_point
+typedef struct	s_point
 {
 	int				x;
 	int				y;
@@ -26,11 +26,22 @@ typedef struct s_point
 	unsigned int	color;
 }	t_point;
 
-typedef struct s_fdf
+typedef struct	s_img {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}	t_img;
+
+typedef struct	s_fdf
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_point	**map;
+	t_img	*img;
 	int		width;
 	int		height;
 	int		scale;
@@ -53,7 +64,7 @@ void	free_mlx(t_fdf *fdf);
 int		close_window(t_fdf *fdf);
 int		key_press(int keycode, void *param);
 
-//void	set_horizon(t_fdf *fdf);
+void	set_horizon(t_fdf *fdf);
 int		ep(char *message, t_fdf *fdf, void **free_list, int fd);
 int		append_2d_point_array(t_point ***mp_d, t_point *new_row, int height);
 int		ft_get_line_length(char *line);

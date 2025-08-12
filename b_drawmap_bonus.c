@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf_bonus.h"
+#include "b_fdf_bonus.h"
 
 // Implement Bresenham's line algorithm or similar to draw a line between p1 and p2
 // This function should use the mlx_pixel_put or similar function to draw pixels on the window

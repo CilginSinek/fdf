@@ -12,6 +12,16 @@
 
 #include "fdf.h"
 
+static void put_pixel_to_image(t_fdf *fdf, int x, int y, int color)
+{
+    char *dst;
+    
+    if (x < 0 || x >= 1200 || y < 0 || y >= 800)
+        return;
+    dst = fdf->img->addr + (y * fdf->img->line_length + x * (fdf->img->bits_per_pixel / 8));
+    *(unsigned int*)dst = color;
+}
+
 // Implement Bresenham's line algorithm or similar to draw a line between p1 and p2
 // This function should use the mlx_pixel_put or similar function to draw pixels on the window
 // For simplicity, this is a placeholder implementation
@@ -36,7 +46,7 @@ static void	draw_line(t_point p1, t_point p2, t_fdf *fdf)
 	{
 		if (l.x < 0 || l.x >= 1200 || l.y < 0 || l.y >= 800)
 			return ;
-		mlx_pixel_put(fdf->mlx_ptr, fdf->win_ptr, (int)l.x, (int)l.y, p1.color);
+		put_pixel_to_image(fdf, (int)l.x, (int)l.y, p1.color);
 		l.x += l.x_inc;
 		l.y += l.y_inc;
 		i++;
@@ -69,11 +79,13 @@ void	draw_map(t_fdf *fdf)
         for (x = 0; x < fdf->width; x++)
         {
 			p = project_point(fdf->map[y][x]);
-			mlx_pixel_put(fdf->mlx_ptr, fdf->win_ptr, p.x, p.y, p.color);
+			put_pixel_to_image(fdf, p.x, p.y, p.color);
             if (x < fdf->width - 1)
                 draw_line(project_point(fdf->map[y][x]), project_point(fdf->map[y][x + 1]), fdf);
             if (y < fdf->height - 1)
                 draw_line(project_point(fdf->map[y][x]), project_point(fdf->map[y + 1][x]), fdf);
         }
     }
+
+	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img->img, 0, 0);
 }
