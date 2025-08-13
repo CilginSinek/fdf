@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*   b_main_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 06:30:10 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/10 20:55:19 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/13 14:26:11 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,25 @@ int	read_files(t_fdf_bonus *fdf,const char *filename)
 
 void	init_fdf_bonus(t_fdf_bonus *fdf)
 {
-	fdf = calloc(1, sizeof(t_fdf_bonus));
-	if (!fdf)
+    fdf->fdf = calloc(1, sizeof(t_fdf));
+    if (!fdf->fdf)
+    {
+        ft_putstr_fd("Error: Memory allocation failed.\n", 2);
+        exit(EXIT_FAILURE);
+    }
+    fdf->fdf->height = 0;
+    fdf->fdf->width = 0;
+    fdf->next_frame = NULL;
+    fdf->projection = calloc(1, sizeof(int));
+    fdf->video_mode = calloc(1, sizeof(int));
+	if (!fdf->projection || !fdf->video_mode)
 	{
 		ft_putstr_fd("Error: Memory allocation failed.\n", 2);
+		free(fdf->fdf);
 		exit(EXIT_FAILURE);
 	}
-	fdf->fdf = NULL;
-	fdf->fdf->height = 0;
-	fdf->fdf->width = 0;
-	fdf->next_frame = NULL;
-	fdf->projection = malloc(sizeof(int));
-	*fdf->projection = 0;
-	fdf->video_mode = malloc(sizeof(int));
+	*(fdf->projection) = 0;
+	*(fdf->video_mode) = 0;
 }
 
 /* int expose_hook(t_fdf_bonus *vars)

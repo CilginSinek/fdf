@@ -6,7 +6,7 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 14:46:43 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/03 15:40:37 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/13 16:03:19 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 # include "../libft/libft.h"
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 1024
 # endif
 
 char	*ft_strjoin_f(char *s1, char const *s2);

@@ -24,8 +24,17 @@ t_fdf_bonus *create_next_frame(t_fdf_bonus **fdf)
     new_frame->next_frame = NULL;
     new_frame->projection = (*fdf)->projection;
     new_frame->video_mode = (*fdf)->video_mode;
-    *new_frame->fdf->mlx_ptr = *(*fdf)->fdf->mlx_ptr;
-    *new_frame->fdf->win_ptr = *(*fdf)->fdf->win_ptr;
+
+    // Allocate memory for the fdf struct inside new_frame
+    new_frame->fdf = (t_fdf *)calloc(1, sizeof(t_fdf));
+    if (!new_frame->fdf)
+    {
+        ft_putstr_fd("Error: Memory allocation failed for new_frame->fdf.\n", 2);
+        exit(EXIT_FAILURE);
+    }
+
+    new_frame->fdf->mlx_ptr = (*fdf)->fdf->mlx_ptr;
+    new_frame->fdf->win_ptr = (*fdf)->fdf->win_ptr;
     new_frame->fdf->width = (*fdf)->fdf->width;
     new_frame->fdf->height = 0;
     new_frame->fdf->offset_x = (*fdf)->fdf->offset_x;
@@ -38,10 +47,11 @@ t_fdf_bonus *create_next_frame(t_fdf_bonus **fdf)
 // need modify ep function
 static int	read_map_while(t_fdf *fdf, char *line, int fd, t_point **points)
 {
+
 	if (fdf->width != ft_get_line_length(line))
 		return (ep("Error: Incorrect line lengths in map file.\n",
 				fdf, (void *[]){points, line}, fd));
-	*points = (t_point *)ft_calloc(fdf->width + 1, sizeof(t_point));
+	*points = (t_point *)calloc(fdf->width + 1, sizeof(t_point));
 	if (!*points)
 		return (ep("Error: Memory allocation failed.\n",
 				fdf, (void *[]){NULL, line}, fd));
@@ -61,7 +71,10 @@ int read_video_file(const char *filename, t_fdf_bonus *fdf)
 {
     int fd;
     char *line;
+    t_point *tmp;
 
+    tmp = NULL;
+    int i = 0;
     fd = open(filename, O_RDONLY);
     if (fd < 0)
         return (ft_putstr_fd("Error: Could not open video file.\n", 2), -1);
@@ -74,14 +87,16 @@ int read_video_file(const char *filename, t_fdf_bonus *fdf)
     fdf->fdf->height = 0;
     while (line)
     {
-        if(ft_strchr(line, '-') != NULL)
+
+        if (ft_strchr_f(line, '-') != NULL)
         {
+            printf("%d frame readed successfuly\n", ++i);
             create_next_frame(&fdf);
             fdf = fdf->next_frame;
             line = get_next_line(fd);
             continue;
         }
-        if(read_map_while(fdf->fdf, line, fd, &fdf->fdf->map[fdf->fdf->height]) == -1)
+        if (read_map_while(fdf->fdf, line, fd, &tmp) == -1)
             return (-1);
         line = get_next_line(fd);
     }
