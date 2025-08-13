@@ -6,7 +6,7 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 06:11:00 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/07 14:58:46 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/13 17:53:13 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,12 @@ static void	draw_line(t_point p1, t_point p2, t_fdf *fdf)
 	}
 }
 
-static t_point project_point(t_point point)
+static t_point project_point(t_point point, t_fdf *fdf)
 {
     t_point projected;
-    int scale = 20;
-    int offset_x = 600;
-    int offset_y = 400;
 
-    projected.x = (point.x - point.y) * cos(30 * (M_PI / 180)) * scale + offset_x;
-    projected.y = ((point.x + point.y) * sin(30 * (M_PI / 180)) - point.z) * scale + offset_y;
+    projected.x = (point.x - point.y) * cos(30 * (M_PI / 180)) * fdf->scale + fdf->offset_x;
+    projected.y = ((point.x + point.y) * sin(30 * (M_PI / 180)) - point.z) * fdf->scale + fdf->offset_y;
     projected.z = point.z;
     projected.color = point.color;
     return projected;
@@ -78,12 +75,13 @@ void	draw_map(t_fdf *fdf)
     {
         for (x = 0; x < fdf->width; x++)
         {
-			p = project_point(fdf->map[y][x]);
+			p = project_point(fdf->map[y][x] ,fdf);
 			put_pixel_to_image(fdf, p.x, p.y, p.color);
             if (x < fdf->width - 1)
-                draw_line(project_point(fdf->map[y][x]), project_point(fdf->map[y][x + 1]), fdf);
+                draw_line(project_point(fdf->map[y][x],fdf), project_point(fdf->map[y][x + 1],fdf), fdf);
             if (y < fdf->height - 1)
-                draw_line(project_point(fdf->map[y][x]), project_point(fdf->map[y + 1][x]), fdf);
+                draw_line(project_point(fdf->map[y][x],fdf), project_point(fdf->map[y + 1][x],fdf), fdf);
+			printf("Drawing point at (%d, %d, %d) with color %u\n", p.x, p.y, p.z, p.color);
         }
     }
 

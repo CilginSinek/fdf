@@ -23,6 +23,8 @@ void	free_mlx(t_fdf *fdf)
 	{
 		if (fdf->win_ptr)
 			mlx_destroy_window(fdf->mlx_ptr, fdf->win_ptr);
+		if (fdf->img && fdf->img->img)
+			mlx_destroy_image(fdf->mlx_ptr, fdf->img->img);
 		mlx_destroy_display(fdf->mlx_ptr);
 		free(fdf->mlx_ptr);
 		fdf->mlx_ptr = NULL;

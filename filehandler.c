@@ -6,7 +6,7 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 17:45:48 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/10 18:50:29 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/13 17:57:36 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ int	read_map_file(const char *filename, t_fdf *fdf)
 
 void set_horizon(t_fdf *fdf)
 {
-	fdf->scale = 18000 / (fdf->width + fdf->height);
-	fdf->offset_x = 600;
-	fdf->offset_y = 400;
+    fdf->scale = 400 / (fdf->width + fdf->height);
+    if (fdf->scale < 1)
+        fdf->scale = 1;
+    fdf->offset_x = 600;
+    fdf->offset_y = 400;
 }
