@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   drawmap.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 06:11:00 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/14 19:37:31 by iduman           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "fdf.h"
 
 static void	put_pixel_to_image(t_fdf *fdf, int x, int y, int color)
@@ -68,7 +56,6 @@ void	draw_map(t_fdf *fdf)
 	int		y;
 	t_point	p;
 
-	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
 	while (y < fdf->height)
 	{
 		while (x < fdf->width)
@@ -85,5 +72,4 @@ void	draw_map(t_fdf *fdf)
 		}
 		y++;
 	}
-	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img->img, 0, 0);
 }

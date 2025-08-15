@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 17:38:02 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/05 18:04:22 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/14 19:40:53 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 # include "get_next_line/get_next_line.h"
 # include <fcntl.h>
 # include <math.h>
-# include <stdio.h>
 
-typedef struct	s_point
+typedef struct s_point
 {
 	int				x;
 	int				y;
@@ -26,7 +25,8 @@ typedef struct	s_point
 	unsigned int	color;
 }	t_point;
 
-typedef struct	s_img {
+typedef struct s_img
+{
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -36,7 +36,7 @@ typedef struct	s_img {
 	int		height;
 }	t_img;
 
-typedef struct	s_fdf
+typedef struct s_fdf
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
@@ -56,8 +56,6 @@ typedef struct s_line
 	float	x;
 	float	y;
 }	t_line;
-
-
 
 void	free_map(t_fdf *fdf);
 void	free_mlx(t_fdf *fdf);

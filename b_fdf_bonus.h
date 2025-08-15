@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_fdf_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:00:47 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/13 14:18:04 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/15 07:29:47 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_fdf
 	void	**mlx_ptr;
 	void	**win_ptr;
 	t_point	**map;
+	t_img	*img;
 	int		width;
 	int		height;
 	int		*scale;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 17:59:04 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/13 14:37:19 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/14 19:53:25 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	get_color(char *value)
 		color = ft_atoi_base(value, "0123456789ABCDEF");
 		r = (color >> 16) & 0xFF;
 		g = (color >> 8) & 0xFF;
-		b = color & 0xFF; 
+		b = color & 0xFF;
 	}
 	return (t << 24 | r << 16 | g << 8 | b);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 17:59:08 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/13 17:54:23 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/14 19:43:00 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int expose_hook(t_fdf *vars)
+int	expose_hook(t_fdf *vars)
 {
 	mlx_clear_window(vars->mlx_ptr, vars->win_ptr);
 	draw_map(vars);
@@ -35,7 +35,8 @@ int	main(int argc, char *argv[])
 		return (ft_putstr_fd("Error: Failed to initialize MLX.\n", 2), 1);
 	fdf.img = &img;
 	fdf.img->img = mlx_new_image(fdf.mlx_ptr, 1200, 800);
-	fdf.img->addr = mlx_get_data_addr(fdf.img->img, &fdf.img->bits_per_pixel, &fdf.img->line_length, &fdf.img->endian);
+	fdf.img->addr = mlx_get_data_addr(fdf.img->img, &fdf.img->bits_per_pixel,
+			&fdf.img->line_length, &fdf.img->endian);
 	set_horizon(&fdf);
 	draw_map(&fdf);
 	mlx_hook(fdf.win_ptr, 17, 0, close_window, &fdf);

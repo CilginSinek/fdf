@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   b_filehandler_bonus.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/15 08:48:06 by iduman            #+#    #+#             */
+/*   Updated: 2025/08/15 08:48:07 by iduman           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "b_fdf_bonus.h"
 
 static int	read_map_while(t_fdf *fdf, char *line, int fd, t_point **points)
@@ -45,4 +57,13 @@ int	read_map_file(const char *filename, t_fdf *fdf)
 	}
 	close(fd);
 	return (0);
+}
+
+void	set_horizon(t_fdf *fdf)
+{
+	fdf->scale = 400 / (fdf->width + fdf->height);
+	if (fdf->scale < 1)
+		fdf->scale = 1;
+	fdf->offset_x = 600;
+	fdf->offset_y = 400;
 }

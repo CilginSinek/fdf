@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_utils_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 17:59:04 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/13 14:37:07 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/15 09:17:34 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,17 @@ int	ep(char *message, t_fdf *fdf, void **free_list, int fd)
 
 	i = 0;
 	ft_putstr_fd(message, 2);
-	if (*fdf->map)
+	if (fdf != NULL && fdf->map != NULL)
 	{
-		while (i < fdf->height)
+		if (*fdf->map)
 		{
-			free(fdf->map[i]);
-			i++;
+			while (i < fdf->height)
+			{
+				free(fdf->map[i]);
+				i++;
+			}
+			free(fdf->map);
 		}
-		free(fdf->map);
 	}
 	if (free_list[0] != NULL)
 		free(free_list[0]);

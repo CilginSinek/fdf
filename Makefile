@@ -46,6 +46,21 @@ fclean: clean
 	make -C $(LIBFTDIR) fclean
 	make -C $(GET_NEXT_LINE_DIR) fclean
 
+normlibs:
+	find $(LIBFTDIR) -maxdepth 1 -type f -print0 | xargs -0 norminette
+	find $(GET_NEXT_LINE_DIR) -maxdepth 1 -type f -print0 | xargs -0 norminette
+
+normmandatory:
+	find . -maxdepth 1 -type f ! -name 'b_*' -print0 | xargs -0 norminette
+	@echo "Norminette checks passed"
+
+normbonus:
+	find . -maxdepth 1 -type f -name 'b_*' -print0 | xargs -0 norminette
+	@echo "Norminette checks passed"
+
+norm: normmandatory normbonus normlibs
+	@echo "Norminette checks passed"
+
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re normmandatory normbonus normlibs norm
