@@ -1,3 +1,5 @@
+#include "b_fdf_bonus.h"
+
 void	free_maps(t_fdf_bonus *fdf)
 {
 	t_fdf_bonus *tmp;
@@ -29,20 +31,20 @@ void	free_maps(t_fdf_bonus *fdf)
 
 void	free_mlx(t_fdf_bonus *fdf)
 {
-	if (fdf->mlx_ptr)
+	if (fdf->fdf->mlx_ptr)
 	{
-		if (fdf->win_ptr)
-			mlx_destroy_window(fdf->mlx_ptr, fdf->win_ptr);
-		mlx_destroy_display(fdf->mlx_ptr);
-		free(fdf->mlx_ptr);
-		fdf->mlx_ptr = NULL;
-		fdf->win_ptr = NULL;
+		if (fdf->fdf->win_ptr)
+			mlx_destroy_window(fdf->fdf->mlx_ptr, fdf->fdf->win_ptr);
+		mlx_destroy_display(fdf->fdf->mlx_ptr);
+		free(fdf->fdf->mlx_ptr);
+		fdf->fdf->mlx_ptr = NULL;
+		fdf->fdf->mlx_ptr = NULL;
 	}
 }
 
 int	close_window(t_fdf_bonus *fdf)
 {
-	free_map(fdf);
+	free_maps(fdf);
 	free_mlx(fdf);
 	exit(0);
 	return (0);
@@ -50,11 +52,11 @@ int	close_window(t_fdf_bonus *fdf)
 
 int	key_press(int keycode, void *param)
 {
-	t_fdf	*fdf;
+	t_fdf_bonus	*fdf;
 
 	if (!param)
 		return (0);
-	fdf = (t_fdf *)param;
+	fdf = (t_fdf_bonus *)param;
 	if (keycode == 65307)
 		close_window(fdf);
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_main_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 06:30:10 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/15 09:28:44 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/16 19:11:03 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	read_files(t_fdf_bonus *fdf,const char *filename)
 //* rotation scale ve offsetler için calloc acılıp leak kontrolü yapılmalı
 void	init_fdf_bonus(t_fdf_bonus *fdf)
 {
-    fdf->fdf = calloc(1, sizeof(t_fdf));
+    fdf->fdf = malloc(sizeof(t_fdf));
     if (!fdf->fdf)
     {
         ft_putstr_fd("Error: Memory allocation failed.\n", 2);
@@ -54,13 +54,22 @@ void	init_fdf_bonus(t_fdf_bonus *fdf)
     }
     fdf->fdf->height = 0;
     fdf->fdf->width = 0;
+	fdf->fdf->rotation = calloc(1, sizeof(int));
 	*fdf->fdf->rotation = 0;
     fdf->next_frame = NULL;
+
     fdf->projection = calloc(1, sizeof(int));
     fdf->video_mode = calloc(1, sizeof(int));
-	if (!fdf->projection || !fdf->video_mode)
+	fdf->fdf->rotation = calloc(1, sizeof(int));
+	if (!fdf->projection || !fdf->video_mode || !fdf->fdf->rotation)
 	{
 		ft_putstr_fd("Error: Memory allocation failed.\n", 2);
+		if(fdf->projection)
+			free(fdf->projection);
+		if(fdf->video_mode)
+			free(fdf->video_mode);
+		if(fdf->fdf->rotation)
+			free(fdf->fdf->rotation);
 		free(fdf->fdf);
 		exit(EXIT_FAILURE);
 	}
@@ -68,18 +77,19 @@ void	init_fdf_bonus(t_fdf_bonus *fdf)
 	*(fdf->video_mode) = 0;
 }
 
-int expose_hook(t_fdf_bonus *vars)
+static int expose_hook(t_fdf_bonus *vars)
 {
-	mlx_clear_window(*vars->mlx_ptr, *vars->win_ptr);
-	draw_map(vars);
+	mlx_clear_window(*vars->fdf->mlx_ptr, *vars->fdf->win_ptr);
+	init_vision(vars);
+	start_vision(vars);
 	return (0);
 }
 
 void init_keyhooks(t_fdf_bonus *fdf)
 {
-	mlx_hook(*fdf->win_ptr, 17, 0, close_window, &fdf);
-	mlx_hook(*fdf->win_ptr, 2, 1L << 0, key_press, &fdf);
-	mlx_expose_hook(*fdf->win_ptr, expose_hook, &fdf);
+	mlx_hook(*fdf->fdf->win_ptr, 17, 0, close_window, &fdf);
+	mlx_hook(*fdf->fdf->win_ptr, 2, 1L << 0, key_press, &fdf);
+	mlx_expose_hook(*fdf->fdf->win_ptr, expose_hook, &fdf);
 }
 
 int	main(int argc, char *argv[])
@@ -91,14 +101,18 @@ int	main(int argc, char *argv[])
 		return (ft_putstr_fd("Usage: ./fdf <map_file>\n", 2), 1);
 	if (read_files(&fdf, argv[1]) < 0)
 		return (1);
- 	*fdf.mlx_ptr = mlx_init();
-	*fdf.win_ptr = mlx_new_window(*fdf.mlx_ptr, 1200, 800, "FDF Window");
-	if (!*fdf.mlx_ptr || !*fdf.win_ptr)
+	printf("main1\n");
+ 	fdf.fdf->mlx_ptr = mlx_init();
+	printf("main2\n");
+	fdf.fdf->win_ptr = mlx_new_window(*fdf.fdf->mlx_ptr, 1200, 800, "FDF Window");
+	printf("main3\n");
+	if (!*fdf.fdf->mlx_ptr || !*fdf.fdf->win_ptr)
 		return (ft_putstr_fd("Error: Failed to initialize MLX.\n", 2), 1);
+
 	init_keyhooks(&fdf);
-	//init_images(&fdf);
-	//draw_map(&fdf);
-	mlx_loop(*fdf.mlx_ptr);
+	init_vision(&fdf);
+	start_vision(&fdf);
+	mlx_loop(fdf.fdf->mlx_ptr);
 	close_window(&fdf);
 	return (0);
 }

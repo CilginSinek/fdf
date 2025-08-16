@@ -56,8 +56,10 @@ void	draw_map(t_fdf *fdf)
 	int		y;
 	t_point	p;
 
+	y = 0;
 	while (y < fdf->height)
 	{
+		x = 0;
 		while (x < fdf->width)
 		{
 			p = project_point(fdf->map[y][x], fdf);

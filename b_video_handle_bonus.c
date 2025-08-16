@@ -22,16 +22,18 @@ void    clear_frames(t_fdf_bonus **fdf)
         if (tmp->fdf)
         {
             if (tmp->fdf->map)
+            {
                 while (i < tmp->fdf->height)
                     free(tmp->fdf->map[i++]);
                 free(tmp->fdf->map);
+            }
             free(tmp->fdf);
         }
         free(tmp);
     }
 }
 
-int *create_next_frame(t_fdf_bonus **current)
+int create_next_frame(t_fdf_bonus **current)
 {
     t_fdf_bonus *new_frame;
 
@@ -55,7 +57,8 @@ int *create_next_frame(t_fdf_bonus **current)
     new_frame->fdf->offset_y = (*current)->fdf->offset_y;
     new_frame->fdf->scale = (*current)->fdf->scale;
     new_frame->fdf->rotation = (*current)->fdf->rotation;
-    return (new_frame);
+    (*current)->next_frame = new_frame;
+    return (1);
 }
 
 // build for video mode
@@ -88,10 +91,10 @@ int read_video_file(const char *filename, t_fdf_bonus *fdf)
     char *line;
     t_point *tmp;
     t_fdf_bonus *current_fdf;
+    int i = 1;
 
     current_fdf = fdf;
     tmp = NULL;
-    int i = 0;
     fd = open(filename, O_RDONLY);
     if (fd < 0)
         return (ft_putstr_fd("Error: Could not open video file.\n", 2), -1);
@@ -104,22 +107,22 @@ int read_video_file(const char *filename, t_fdf_bonus *fdf)
     current_fdf->fdf->height = 0;
     while (line)
     {
-
         if (ft_strchr_f(line, '-') != NULL)
         {
+            printf("frame islendi %i / 60\n",i++);
             if (create_next_frame(&current_fdf) < 0)
             {
-                clear_frames(&start);
+                clear_frames(&fdf);
                 ep("Error: Memory allocation failed.\n", NULL, (void *[]){tmp, line}, fd);
             }
-            current_fdf = current_fdf->next_frame;
             line = get_next_line(fd);
             continue ;
         }
         if (read_map_while(current_fdf->fdf, line, fd, &tmp) == -1)
-            return (clear_frames(&start), -1);
+            return (clear_frames(&fdf), -1);
         line = get_next_line(fd);
     }
+    printf("bitti\n");
     close(fd);
     return (0);
 }

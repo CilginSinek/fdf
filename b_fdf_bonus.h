@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_fdf_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:00:47 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/15 07:29:47 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/16 16:00:53 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ typedef struct s_fdf_bonus
     struct s_fdf_bonus	*next_frame;
 }	t_fdf_bonus;
 
+int	close_window(t_fdf_bonus *fdf);
+int	key_press(int keycode, void *param);
+
 int		ep(char *message, t_fdf *fdf, void **free_list, int fd);
 int		append_2d_point_array(t_point ***mp_d, t_point *new_row, int height);
 int		ft_get_line_length(char *line);
@@ -74,4 +77,7 @@ int		get_color(char *value);
 int		set_map_line(char *line, t_point *point, int y);
 int		read_map_file(const char *filename, t_fdf *fdf);
 int read_video_file(const char *filename, t_fdf_bonus *fdf);
+void	draw_map(t_fdf *fdf);
+int    init_vision(t_fdf_bonus *fdf);
+int start_vision(t_fdf_bonus *fdf);
 #endif

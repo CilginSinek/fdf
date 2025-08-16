@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_filehandler_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 08:48:06 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/15 08:48:07 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/16 15:16:20 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ int	read_map_file(const char *filename, t_fdf *fdf)
 
 void	set_horizon(t_fdf *fdf)
 {
-	fdf->scale = 400 / (fdf->width + fdf->height);
-	if (fdf->scale < 1)
-		fdf->scale = 1;
-	fdf->offset_x = 600;
-	fdf->offset_y = 400;
+	*fdf->scale = 400 / (fdf->width + fdf->height);
+	if (*fdf->scale < 1)
+		*fdf->scale = 1;
+	*fdf->offset_x = 600;
+	*fdf->offset_y = 400;
 }

@@ -1,11 +1,11 @@
 NAME=fdf
 NAME_BONUS=fdf_bonus
 SRC= main.c utils.c filehandler.c drawmap.c exit_utils.c
-SRC_BONUS= b_main_bonus.c b_video_handle_bonus.c b_map_handle_bonus.c b_utils_bonus.c
+SRC_BONUS= b_main_bonus.c b_exit_utils_bonus.c b_filehandler_bonus.c b_imagehandler_bonus.c b_utils_bonus.c b_video_handle_bonus.c b_handlevision.c
 OBJ=$(SRC:.c=.o)
 OBJ_BONUS=$(SRC_BONUS:.c=.o)
 CC=cc
-CFLAGS=-Wall -Wextra -Werror -g
+CFLAGS=-Wall -Wextra -Werror
 MINILIBXDIR= ./minilibx-linux
 LIBFTDIR= ./libft
 GET_NEXT_LINE_DIR= ./get_next_line
@@ -19,7 +19,7 @@ all: $(NAME)
 bonus: $(NAME_BONUS)
 
 $(NAME_BONUS): $(OBJ_BONUS) $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX)
-	$(CC) $(CFLAGS) -o $@ $^  $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX) -lm -lX11 -lXext -lpthread -I./bonus
+	$(CC) $(CFLAGS) -o $@ $^  $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX) -lm -lX11 -lXext -lpthread
 
 $(NAME): $(OBJ) $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX)
 	$(CC) $(CFLAGS) -o $@ $^  $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX) -lm -lX11 -lXext -lpthread

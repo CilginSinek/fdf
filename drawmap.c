@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawmap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 06:11:00 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/14 19:37:31 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/16 15:55:10 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ void	draw_map(t_fdf *fdf)
 	t_point	p;
 
 	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
+	y = 0;
 	while (y < fdf->height)
 	{
+		x = 0;
 		while (x < fdf->width)
 		{
 			p = project_point(fdf->map[y][x], fdf);
