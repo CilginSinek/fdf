@@ -1,4 +1,4 @@
-#include "b_fdf_bonus.h"
+#include "fdf_bonus.h"
 
 void	free_maps(t_fdf_bonus *fdf)
 {

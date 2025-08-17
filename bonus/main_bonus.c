@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "b_fdf_bonus.h"
+#include "fdf_bonus.h"
 
 int	read_files(t_fdf_bonus *fdf,const char *filename)
 {
@@ -37,6 +37,10 @@ int	read_files(t_fdf_bonus *fdf,const char *filename)
 	else
 	{
 		free(fdf->fdf);
+		free(fdf->fdf->offset_x);
+		free(fdf->fdf->offset_y);
+		free(fdf->fdf->scale);
+		free(fdf->fdf->rotation);
 		free(fdf->video_mode);
 		free(fdf->projection);
 		return (ft_putstr_fd("Error: Unsupported file type.\n", 2), 0);
@@ -46,22 +50,18 @@ int	read_files(t_fdf_bonus *fdf,const char *filename)
 //* rotation scale ve offsetler için calloc acılıp leak kontrolü yapılmalı
 void	init_fdf_bonus(t_fdf_bonus *fdf)
 {
-    fdf->fdf = malloc(sizeof(t_fdf));
-    if (!fdf->fdf)
-    {
-        ft_putstr_fd("Error: Memory allocation failed.\n", 2);
-        exit(EXIT_FAILURE);
-    }
     fdf->fdf->height = 0;
     fdf->fdf->width = 0;
 	fdf->fdf->rotation = calloc(1, sizeof(int));
-	*fdf->fdf->rotation = 0;
     fdf->next_frame = NULL;
 
     fdf->projection = calloc(1, sizeof(int));
     fdf->video_mode = calloc(1, sizeof(int));
 	fdf->fdf->rotation = calloc(1, sizeof(int));
-	if (!fdf->projection || !fdf->video_mode || !fdf->fdf->rotation)
+	fdf->fdf->offset_x = calloc(1, sizeof(int));
+	fdf->fdf->offset_y = calloc(1, sizeof(int));
+	fdf->fdf->scale = calloc(1, sizeof(int));
+	if (!fdf->projection || !fdf->video_mode || !fdf->fdf->rotation || !fdf->fdf->offset_x || !fdf->fdf->offset_y || !fdf->fdf->scale)
 	{
 		ft_putstr_fd("Error: Memory allocation failed.\n", 2);
 		if(fdf->projection)
@@ -70,16 +70,26 @@ void	init_fdf_bonus(t_fdf_bonus *fdf)
 			free(fdf->video_mode);
 		if(fdf->fdf->rotation)
 			free(fdf->fdf->rotation);
+		if(fdf->fdf->offset_x)
+			free(fdf->fdf->offset_x);
+		if(fdf->fdf->offset_y)
+			free(fdf->fdf->offset_y);
+		if(fdf->fdf->scale)
+			free(fdf->fdf->scale);
 		free(fdf->fdf);
 		exit(EXIT_FAILURE);
 	}
+	*(fdf->fdf->offset_x) = 400;
+	*(fdf->fdf->offset_y) = 300;
+	*(fdf->fdf->rotation) = 0;
+	*(fdf->fdf->scale) = 1;
 	*(fdf->projection) = 0;
 	*(fdf->video_mode) = 0;
 }
 
 static int expose_hook(t_fdf_bonus *vars)
 {
-	mlx_clear_window(*vars->fdf->mlx_ptr, *vars->fdf->win_ptr);
+	mlx_clear_window(vars->fdf->mlx_ptr, vars->fdf->win_ptr);
 	init_vision(vars);
 	start_vision(vars);
 	return (0);
@@ -87,32 +97,40 @@ static int expose_hook(t_fdf_bonus *vars)
 
 void init_keyhooks(t_fdf_bonus *fdf)
 {
-	mlx_hook(*fdf->fdf->win_ptr, 17, 0, close_window, &fdf);
-	mlx_hook(*fdf->fdf->win_ptr, 2, 1L << 0, key_press, &fdf);
-	mlx_expose_hook(*fdf->fdf->win_ptr, expose_hook, &fdf);
+	mlx_hook(fdf->fdf->win_ptr, 17, 0, close_window, fdf);
+	mlx_hook(fdf->fdf->win_ptr, 2, 1L << 0, key_press, fdf);
+	mlx_expose_hook(fdf->fdf->win_ptr, expose_hook, fdf);
 }
 
 int	main(int argc, char *argv[])
 {
-	t_fdf_bonus		fdf;
+	t_fdf_bonus		*fdf;
 
-	init_fdf_bonus(&fdf);
 	if (argc != 2)
 		return (ft_putstr_fd("Usage: ./fdf <map_file>\n", 2), 1);
-	if (read_files(&fdf, argv[1]) < 0)
-		return (1);
-	printf("main1\n");
- 	fdf.fdf->mlx_ptr = mlx_init();
-	printf("main2\n");
-	fdf.fdf->win_ptr = mlx_new_window(*fdf.fdf->mlx_ptr, 1200, 800, "FDF Window");
-	printf("main3\n");
-	if (!*fdf.fdf->mlx_ptr || !*fdf.fdf->win_ptr)
+	fdf = calloc(1, sizeof(t_fdf_bonus));
+	if (!fdf)
+		return (ft_putstr_fd("Error: Memory allocation failed.\n", 2), 1);
+	fdf->fdf = calloc(1, sizeof(t_fdf));
+	if (!fdf->fdf)
+		return (ft_putstr_fd("Error: Memory allocation failed.\n", 2), 1);
+	fdf->fdf->mlx_ptr = mlx_init();
+	fdf->fdf->win_ptr = mlx_new_window(fdf->fdf->mlx_ptr, 1200, 800, "FDF Window");
+	if (!fdf->fdf->mlx_ptr || !fdf->fdf->win_ptr)
 		return (ft_putstr_fd("Error: Failed to initialize MLX.\n", 2), 1);
+	mlx_string_put(fdf->fdf->mlx_ptr, fdf->fdf->win_ptr, 50, 50, 0xFFFFFF, "Loading...");
+	init_fdf_bonus(fdf);
+	if (read_files(fdf, argv[1]) < 0)
+		return (1);
+	init_keyhooks(fdf);
+	printf("main1\n");
+	set_horizon(fdf);
+	init_vision(fdf);
+	printf("main2\n");
+	start_vision(fdf);
+	printf("main3\n");
+	mlx_loop(fdf->fdf->mlx_ptr);
+	close_window(fdf);
 
-	init_keyhooks(&fdf);
-	init_vision(&fdf);
-	start_vision(&fdf);
-	mlx_loop(fdf.fdf->mlx_ptr);
-	close_window(&fdf);
 	return (0);
 }

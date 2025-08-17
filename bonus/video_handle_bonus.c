@@ -1,13 +1,4 @@
-#include "b_fdf_bonus.h"
-
-//* kopya özellikleri ana framedeki adreslerden geçireceğim;
-void set_next_frame(t_fdf_bonus **fdf, t_fdf_bonus *next_frame)
-{
-    (*fdf)->next_frame = next_frame;
-    next_frame->next_frame = NULL;
-    next_frame->projection = (*fdf)->projection;
-    next_frame->video_mode = (*fdf)->video_mode;
-}
+#include "fdf_bonus.h"
 
 void    clear_frames(t_fdf_bonus **fdf)
 {
@@ -58,6 +49,7 @@ int create_next_frame(t_fdf_bonus **current)
     new_frame->fdf->scale = (*current)->fdf->scale;
     new_frame->fdf->rotation = (*current)->fdf->rotation;
     (*current)->next_frame = new_frame;
+    *current = new_frame;
     return (1);
 }
 
@@ -109,20 +101,21 @@ int read_video_file(const char *filename, t_fdf_bonus *fdf)
     {
         if (ft_strchr_f(line, '-') != NULL)
         {
-            printf("frame islendi %i / 60\n",i++);
+            printf("frame %i\n", i++);
             if (create_next_frame(&current_fdf) < 0)
             {
                 clear_frames(&fdf);
                 ep("Error: Memory allocation failed.\n", NULL, (void *[]){tmp, line}, fd);
             }
             line = get_next_line(fd);
+
             continue ;
         }
         if (read_map_while(current_fdf->fdf, line, fd, &tmp) == -1)
             return (clear_frames(&fdf), -1);
+
         line = get_next_line(fd);
     }
-    printf("bitti\n");
     close(fd);
     return (0);
 }

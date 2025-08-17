@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "b_fdf_bonus.h"
+#include "fdf_bonus.h"
 
 static int	read_map_while(t_fdf *fdf, char *line, int fd, t_point **points)
 {
@@ -59,11 +59,11 @@ int	read_map_file(const char *filename, t_fdf *fdf)
 	return (0);
 }
 
-void	set_horizon(t_fdf *fdf)
+void	set_horizon(t_fdf_bonus *fdf)
 {
-	*fdf->scale = 400 / (fdf->width + fdf->height);
-	if (*fdf->scale < 1)
-		*fdf->scale = 1;
-	*fdf->offset_x = 600;
-	*fdf->offset_y = 400;
+	*fdf->fdf->scale = 400 / (fdf->fdf->width + fdf->fdf->height);
+	if (*fdf->fdf->scale < 1)
+		*fdf->fdf->scale = 1;
+	*fdf->fdf->offset_x = 600;
+	*fdf->fdf->offset_y = 400;
 }

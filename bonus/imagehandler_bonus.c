@@ -1,4 +1,4 @@
-#include "fdf.h"
+#include "fdf_bonus.h"
 
 static void	put_pixel_to_image(t_fdf *fdf, int x, int y, int color)
 {
@@ -42,9 +42,9 @@ static t_point	project_point(t_point point, t_fdf *fdf)
 	t_point	projected;
 
 	projected.x = (point.x - point.y) * cos(30 * (M_PI / 180)
-			) * fdf->scale + fdf->offset_x;
+			) * *fdf->scale + *fdf->offset_x;
 	projected.y = ((point.x + point.y) * sin(30 * (M_PI / 180)
-				) - point.z) * fdf->scale + fdf->offset_y;
+				) - point.z) * *fdf->scale + *fdf->offset_y;
 	projected.z = point.z;
 	projected.color = point.color;
 	return (projected);
