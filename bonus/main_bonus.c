@@ -118,6 +118,10 @@ int	main(int argc, char *argv[])
 	fdf->fdf->win_ptr = mlx_new_window(fdf->fdf->mlx_ptr, 1200, 800, "FDF Window");
 	if (!fdf->fdf->mlx_ptr || !fdf->fdf->win_ptr)
 		return (ft_putstr_fd("Error: Failed to initialize MLX.\n", 2), 1);
+	//* kaçıncı frame i işlediğini ekrana göster
+	//* video bittiğinde son framede kalsın escye basıldığında kapababilsin
+	//* argümanlarla belki projection eklenebilirs 1-2 isometrik, paralel
+	//* paralel görünümü eklemen gerek
 	mlx_string_put(fdf->fdf->mlx_ptr, fdf->fdf->win_ptr, 50, 50, 0xFFFFFF, "Loading...");
 	init_fdf_bonus(fdf);
 	if (read_files(fdf, argv[1]) < 0)
