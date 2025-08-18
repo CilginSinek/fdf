@@ -6,6 +6,10 @@ static void	put_pixel_to_image(t_fdf *fdf, int x, int y, int color)
 
 	if (x < 0 || x >= 1200 || y < 0 || y >= 800)
 		return ;
+
+	if (color == 0)
+		//	red
+		color = 0xFF0000;
 	dst = fdf->img->addr + (y * fdf->img->line_length + x * (
 				fdf->img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;

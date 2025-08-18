@@ -48,9 +48,8 @@ int create_next_frame(t_fdf_bonus **current)
     new_frame->fdf->offset_y = (*current)->fdf->offset_y;
     new_frame->fdf->scale = (*current)->fdf->scale;
     new_frame->fdf->rotation = (*current)->fdf->rotation;
-    (*current)->next_frame = new_frame;
     *current = new_frame;
-    return (1);
+    return (0);
 }
 
 // build for video mode
@@ -108,7 +107,6 @@ int read_video_file(const char *filename, t_fdf_bonus *fdf)
                 ep("Error: Memory allocation failed.\n", NULL, (void *[]){tmp, line}, fd);
             }
             line = get_next_line(fd);
-
             continue ;
         }
         if (read_map_while(current_fdf->fdf, line, fd, &tmp) == -1)

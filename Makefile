@@ -19,10 +19,10 @@ all: $(NAME)
 bonus: $(NAME_BONUS)
 
 $(NAME_BONUS): $(OBJ_BONUS) $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX)
-	$(CC) $(CFLAGS) -o $@ $^  $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX) -lm -lX11 -lXext -lpthread
+	$(CC) $(CFLAGS) -o $@ $^  $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX) -lm -lX11 -lXext
 
 $(NAME): $(OBJ) $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX)
-	$(CC) $(CFLAGS) -o $@ $^  $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX) -lm -lX11 -lXext -lpthread
+	$(CC) $(CFLAGS) -o $@ $^  $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX) -lm -lX11 -lXext
 
 $(MINILIBX):
 	make -C $(MINILIBXDIR)

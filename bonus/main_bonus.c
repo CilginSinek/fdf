@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   b_main_bonus.c                                     :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 06:30:10 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/16 19:11:03 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/18 18:47:43 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	read_files(t_fdf_bonus *fdf,const char *filename)
 	if (strstr(filename, ".fdfs") != NULL)
 	{
 		*(fdf->video_mode) = 1;
-		if (read_video_file(filename, fdf) == 1)
+		if (read_video_file(filename, fdf) != 0)
 		{
 			free(fdf->fdf), free(fdf->video_mode), free(fdf->projection);
 			return (0);
@@ -118,10 +118,6 @@ int	main(int argc, char *argv[])
 	fdf->fdf->win_ptr = mlx_new_window(fdf->fdf->mlx_ptr, 1200, 800, "FDF Window");
 	if (!fdf->fdf->mlx_ptr || !fdf->fdf->win_ptr)
 		return (ft_putstr_fd("Error: Failed to initialize MLX.\n", 2), 1);
-	//* kaçıncı frame i işlediğini ekrana göster
-	//* video bittiğinde son framede kalsın escye basıldığında kapababilsin
-	//* argümanlarla belki projection eklenebilirs 1-2 isometrik, paralel
-	//* paralel görünümü eklemen gerek
 	mlx_string_put(fdf->fdf->mlx_ptr, fdf->fdf->win_ptr, 50, 50, 0xFFFFFF, "Loading...");
 	init_fdf_bonus(fdf);
 	if (read_files(fdf, argv[1]) < 0)
@@ -131,7 +127,7 @@ int	main(int argc, char *argv[])
 	set_horizon(fdf);
 	init_vision(fdf);
 	printf("main2\n");
-	start_vision(fdf);
+	mlx_loop_hook(fdf->fdf->mlx_ptr, start_vision, fdf);
 	printf("main3\n");
 	mlx_loop(fdf->fdf->mlx_ptr);
 	close_window(fdf);
