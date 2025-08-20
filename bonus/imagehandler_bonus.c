@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   imagehandler_bonus.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/20 17:42:42 by iduman            #+#    #+#             */
+/*   Updated: 2025/08/20 17:42:42 by iduman           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf_bonus.h"
 
 static void	put_pixel_to_image(t_fdf *fdf, int x, int y, int color)
@@ -6,7 +18,6 @@ static void	put_pixel_to_image(t_fdf *fdf, int x, int y, int color)
 
 	if (x < 0 || x >= 1200 || y < 0 || y >= 800)
 		return ;
-
 	dst = fdf->img->addr + (y * fdf->img->line_length + x * (
 				fdf->img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
@@ -41,13 +52,30 @@ static void	draw_line(t_point p1, t_point p2, t_fdf *fdf)
 static t_point	project_point(t_point point, t_fdf *fdf)
 {
 	t_point	projected;
+	double	theta;
+	double	rot_x;
+	double	rot_y;
 
-	projected.x = (point.x - point.y) * cos(30 * (M_PI / 180)
-			) * *fdf->scale + *fdf->offset_x;
-	projected.y = ((point.x + point.y) * sin(30 * (M_PI / 180)
-				) - point.z) * *fdf->scale + *fdf->offset_y;
-	projected.z = point.z;
-	projected.color = point.color;
+	theta = (*fdf->rotation) * (M_PI / 180.0);
+	rot_x = point.x * cos(theta) - point.y * sin(theta);
+	rot_y = point.x * sin(theta) + point.y * cos(theta);
+	if (fdf->fdf->projection == 0)
+	{
+		projected.x = (rot_x - rot_y) * cos(30 * (M_PI / 180))
+			* *fdf->scale + *fdf->offset_x;
+		projected.y = ((rot_x + rot_y) * sin(30 * (M_PI / 180))
+			- point.z) * *fdf->scale + *fdf->offset_y;
+		projected.z = point.z;
+		projected.color = point.color;
+	}
+	else
+	{
+		projected.x = rot_x * *fdf->scale + *fdf->offset_x;
+		projected.y = rot_y * *fdf->scale + *fdf->offset_y;
+		projected.z = point.z;
+		projected.color = point.color;
+	}
+
 	return (projected);
 }
 

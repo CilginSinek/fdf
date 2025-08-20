@@ -1,7 +1,7 @@
 NAME=fdf
 NAME_BONUS=fdf_bonus
 SRC= mandatory/main.c mandatory/utils.c mandatory/filehandler.c mandatory/drawmap.c mandatory/exit_utils.c
-SRC_BONUS= bonus/main_bonus.c bonus/exit_utils_bonus.c bonus/filehandler_bonus.c bonus/imagehandler_bonus.c bonus/utils_bonus.c bonus/video_handle_bonus.c bonus/handlevision_bonus.c
+SRC_BONUS= /bonus/exit_utils_bonus.c /bonus/fdf_bonus.h /bonus/filehandler_bonus.c /bonus/handlevision_bonus.c /bonus/imagehandler_bonus.c /bonus/key_utils.c /bonus/main_bonus.c /bonus/utils1_bonus.c /bonus/utils_bonus.c /bonus/video_handle_bonus.c /bonus/video_helper.c
 OBJ=$(SRC:.c=.o)
 OBJ_BONUS=$(SRC_BONUS:.c=.o)
 CC=cc
@@ -47,15 +47,15 @@ fclean: clean
 	make -C $(GET_NEXT_LINE_DIR) fclean
 
 normlibs:
-	find $(LIBFTDIR) -maxdepth 1 -type f -print0 | xargs -0 norminette
-	find $(GET_NEXT_LINE_DIR) -maxdepth 1 -type f -print0 | xargs -0 norminette
+	find $(LIBFTDIR) -type f -print0 | xargs -0 norminette
+	find $(GET_NEXT_LINE_DIR) -type f -print0 | xargs -0 norminette
 
 normmandatory:
-	find . -maxdepth 1 -type f ! -name 'b_*' -print0 | xargs -0 norminette
+	find ./mandatory -type f -print0 | xargs -0 norminette
 	@echo "Norminette checks passed"
 
 normbonus:
-	find . -maxdepth 1 -type f -name 'b_*' -print0 | xargs -0 norminette
+	find ./bonus -type f -print0 | xargs -0 norminette
 	@echo "Norminette checks passed"
 
 norm: normmandatory normbonus normlibs
@@ -63,4 +63,4 @@ norm: normmandatory normbonus normlibs
 
 re: fclean all
 
-.PHONY: all clean fclean re normmandatory normbonus normlibs norm
+.PHONY: all bonus clean fclean re normmandatory normbonus normlibs norm

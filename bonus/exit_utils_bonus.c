@@ -1,31 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit_utils_bonus.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/20 17:42:32 by iduman            #+#    #+#             */
+/*   Updated: 2025/08/20 17:42:32 by iduman           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf_bonus.h"
 
-void	free_maps(t_fdf_bonus *fdf)
+void	free_utils(t_fdf *tmp)
 {
-	t_fdf_bonus *tmp;
-    int i;
+	if (tmp->projection)
+		free(tmp->projection);
+	if (tmp->offset_x)
+		free(tmp->offset_x);
+	if (tmp->offset_y)
+		free(tmp->offset_y);
+	if (tmp->scale)
+		free(tmp->scale);
+	if (tmp->rotation)
+		free(tmp->rotation);
+}
 
-    i = 0;
-	tmp = fdf;
-	while (tmp)
+static void	free_maps(t_fdf_bonus *fdf)
+{
+	int			i;
+
+	i = 0;
+	while (fdf)
 	{
-		if (tmp->fdf->map)
+		if (fdf->fdf)
 		{
-			while (i < tmp->fdf->height)
+			if (fdf->fdf->map)
 			{
-				free(tmp->fdf->map[i]);
-				i++;
+				while (i < fdf->fdf->height)
+					free(fdf->fdf->map[i++]);
+				free(fdf->fdf->map);
+				fdf->fdf->map = NULL;
 			}
-			free(tmp->fdf->map);
-			tmp->fdf->map = NULL;
+			if (fdf->fdf->img)
+			{
+				mlx_destroy_image(fdf->fdf->mlx_ptr, fdf->fdf->img->img);
+				free(fdf->fdf->img);
+				fdf->fdf->img = NULL;
+			}
+			free(fdf->fdf);
 		}
-        if (tmp->fdf->img)
-		{
-			mlx_destroy_image(tmp->fdf->mlx_ptr, tmp->fdf->img->img);
-			free(tmp->fdf->img);
-			tmp->fdf->img = NULL;
-		}
-		tmp = tmp->next_frame;
+		fdf = fdf->next_frame;
 	}
 }
 
@@ -44,20 +69,11 @@ void	free_mlx(t_fdf_bonus *fdf)
 
 int	close_window(t_fdf_bonus *fdf)
 {
+	free_utils(fdf->fdf);
 	free_maps(fdf);
 	free_mlx(fdf);
+	if (fdf->video_mode)
+		free(fdf->video_mode);
 	exit(0);
-	return (0);
-}
-
-int	key_press(int keycode, void *param)
-{
-	t_fdf_bonus	*fdf;
-
-	if (!param)
-		return (0);
-	fdf = (t_fdf_bonus *)param;
-	if (keycode == 65307)
-		close_window(fdf);
 	return (0);
 }
