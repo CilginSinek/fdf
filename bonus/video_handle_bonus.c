@@ -64,7 +64,7 @@ static int	read_map_while(t_fdf *fdf, char *line, int fd, t_point **points)
 	if (!*points)
 		return (ep("Error: Memory allocation failed.\n",
 				fdf, (void *[]){NULL, line}, fd));
-	if (set_map_line(line, *points, fdf->height) == -1)
+	if (set_map_line(line, *points, fdf->height, get_video_color) == -1)
 		return (ep("Error: Failed to set map line.\n",
 				fdf, (void *[]){*points, line}, fd));
 	free(line);

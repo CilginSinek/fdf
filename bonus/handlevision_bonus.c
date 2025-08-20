@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlevision_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 08:07:08 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/18 20:40:07 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/20 16:19:17 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,23 @@ int rehandle_vision(t_fdf_bonus *fdf)
 
 static void animation(t_fdf_bonus *fdf)
 {
-    static t_fdf_bonus *current_frame = NULL;
+    static t_fdf_bonus *current_frame;
     
     if (!current_frame)
         current_frame = fdf;
-    
     if (!current_frame->fdf || !current_frame->fdf->img || !current_frame->fdf->img->img)
     {
         printf("Error: NULL pointer in animation\n");
         return;
     }
-
     mlx_clear_window(current_frame->fdf->mlx_ptr, current_frame->fdf->win_ptr);
     mlx_put_image_to_window(current_frame->fdf->mlx_ptr, current_frame->fdf->win_ptr, current_frame->fdf->img->img, 0, 0);
-    
-    // Döngüyü doğru şekilde yönetin
+    mlx_do_sync(current_frame->fdf->mlx_ptr);
+    usleep(66666);
     if (current_frame->next_frame)
         current_frame = current_frame->next_frame;
     else
-        current_frame = fdf; // Başa dön
+        current_frame = fdf;
 }
 
 int start_vision(t_fdf_bonus *fdf)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   b_filehandler_bonus.c                              :+:      :+:    :+:   */
+/*   filehandler_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 08:48:06 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/16 15:16:20 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/20 16:05:42 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	read_map_while(t_fdf *fdf, char *line, int fd, t_point **points)
 	if (!*points)
 		return (ep("Error: Memory allocation failed.\n",
 				fdf, (void *[]){NULL, line}, fd));
-	if (set_map_line(line, *points, fdf->height) == -1)
+	if (set_map_line(line, *points, fdf->height, get_color) == -1)
 		return (ep("Error: Failed to set map line.\n",
 				fdf, (void *[]){*points, line}, fd));
 	free(line);

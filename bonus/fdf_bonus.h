@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:00:47 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/18 18:51:26 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/20 16:05:56 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int		ep(char *message, t_fdf *fdf, void **free_list, int fd);
 int		append_2d_point_array(t_point ***mp_d, t_point *new_row, int height);
 int		ft_get_line_length(char *line);
 int		get_color(char *value);
-int		set_map_line(char *line, t_point *point, int y);
+int		get_video_color(char *value);
+int		set_map_line(char *line, t_point *point, int y, int (*get_color)(char *));
 int		read_map_file(const char *filename, t_fdf *fdf);
 void	set_horizon(t_fdf_bonus *fdf);
 int read_video_file(const char *filename, t_fdf_bonus *fdf);
