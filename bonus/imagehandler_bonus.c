@@ -64,7 +64,7 @@ static t_point	project_point(t_point point, t_fdf *fdf)
 		projected.x = (rot_x - rot_y) * cos(30 * (M_PI / 180))
 			* *fdf->scale + *fdf->offset_x;
 		projected.y = ((rot_x + rot_y) * sin(30 * (M_PI / 180))
-			- point.z) * *fdf->scale + *fdf->offset_y;
+				- point.z) * *fdf->scale + *fdf->offset_y;
 		projected.z = point.z;
 		projected.color = point.color;
 	}
@@ -75,7 +75,6 @@ static t_point	project_point(t_point point, t_fdf *fdf)
 		projected.z = point.z;
 		projected.color = point.color;
 	}
-
 	return (projected);
 }
 

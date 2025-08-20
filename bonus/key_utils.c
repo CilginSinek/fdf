@@ -67,11 +67,11 @@ int	key_press(int keycode, void *param)
 		close_window(fdf);
 	if (*fdf->video_mode == 0 && is_workable(keycode,
 			(int *){61, 45, 65, 68, 87, 83, 81, 69, 0}))
-			{
-				increase_decrease(keycode, fdf);
-				mlx_clear_window(fdf->fdf->mlx_ptr, fdf->fdf->win_ptr);
-				init_vision(fdf);
-				start_vision(fdf, (void *)1);
-			}
+	{
+		increase_decrease(keycode, fdf);
+		mlx_clear_window(fdf->fdf->mlx_ptr, fdf->fdf->win_ptr);
+		init_vision(fdf);
+		start_vision(fdf, (void *)1);
+	}
 	return (0);
 }
