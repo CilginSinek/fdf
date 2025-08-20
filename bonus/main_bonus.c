@@ -35,7 +35,7 @@ int	read_files(t_fdf_bonus *fdf, const char *filename)
 	}
 }
 
-void	init_fdf_bonus(t_fdf_bonus *fdf)
+void	init_fdf_bonus(t_fdf_bonus *fdf, int p)
 {
 	fdf->fdf->height = 0;
 	fdf->fdf->width = 0;
@@ -56,7 +56,7 @@ void	init_fdf_bonus(t_fdf_bonus *fdf)
 	*(fdf->fdf->offset_y) = 300;
 	*(fdf->fdf->rotation) = 0;
 	*(fdf->fdf->scale) = 1;
-	*(fdf->fdf->projection) = 0;
+	*(fdf->fdf->projection) = p;
 	*(fdf->video_mode) = 0;
 	mlx_string_put(fdf->fdf->mlx_ptr, fdf->fdf->win_ptr,
 		600, 400, 0xFFFFFF, "Loading...");
@@ -88,8 +88,8 @@ int	main(int argc, char *argv[])
 {
 	t_fdf_bonus		*fdf;
 
-	if (argc != 2)
-		return (ft_putstr_fd("Usage: ./fdf <map_file>\n", 2), 1);
+	if (argc != 2 && argc != 3)
+		return (ft_putstr_fd("Usage: ./fdf <map_file> <projection>\n", 2), 1);
 	fdf = ft_calloc(1, sizeof(t_fdf_bonus));
 	if (!fdf)
 		return (ft_putstr_fd("Error: Memory allocation failed.\n", 2), 1);
@@ -101,7 +101,10 @@ int	main(int argc, char *argv[])
 			1200, 800, "FDF Window");
 	if (!fdf->fdf->mlx_ptr || !fdf->fdf->win_ptr)
 		return (ft_putstr_fd("Error: Failed to initialize MLX.\n", 2), 1);
-	init_fdf_bonus(fdf);
+	if (argc == 3)
+		init_fdf_bonus(fdf, ft_atoi(argv[2]));
+	else
+		init_fdf_bonus(fdf, 0);
 	if (read_files(fdf, argv[1]) < 0)
 		return (1);
 	init_keyhooks_system(fdf);

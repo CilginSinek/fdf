@@ -58,7 +58,7 @@ normbonus:
 	find ./bonus -type f -print0 | xargs -0 norminette
 	@echo "Norminette checks passed"
 
-norm: normmandatory normbonus normlibs
+norm: normmandatory normbonus normbonus normlibs
 	@echo "Norminette checks passed"
 
 re: fclean all
