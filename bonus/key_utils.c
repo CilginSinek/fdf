@@ -14,30 +14,24 @@
 
 void	increase_decrease(int keycode, t_fdf_bonus *fdf)
 {
-	if (keycode == 61)
+	if (keycode == 65451)
 		*(fdf->fdf->scale) += 1;
-	else if (keycode == 45)
+	else if (keycode == 65453)
 		*(fdf->fdf->scale) -= 1;
-	else if (keycode == 65)
+	else if (keycode == 97)
 		*(fdf->fdf->offset_x) += 1;
-	else if (keycode == 68)
+	else if (keycode == 100)
 		*(fdf->fdf->offset_x) -= 1;
-	else if (keycode == 87)
+	else if (keycode == 115)
 		*(fdf->fdf->offset_y) += 1;
-	else if (keycode == 83)
+	else if (keycode == 119)
 		*(fdf->fdf->offset_y) -= 1;
-	else if (keycode == 81)
-	{
+	else if (keycode == 113)
 		*(fdf->fdf->rotation) += 1;
-		if (*(fdf->fdf->rotation) > 359)
-			*(fdf->fdf->rotation) = 0;
-	}
-	else if (keycode == 69)
-	{
+	else if (keycode == 101)
 		*(fdf->fdf->rotation) -= 1;
-		if (*(fdf->fdf->rotation) < 0)
-			*(fdf->fdf->rotation) = 359;
-	}
+	else if (keycode == 112)
+		*(fdf->fdf->projection) = !*(fdf->fdf->projection);
 }
 
 static int	is_workable(int keycode, int *arr)
@@ -66,7 +60,7 @@ int	key_press(int keycode, void *param)
 	if (keycode == 65307)
 		close_window(fdf);
 	if (*fdf->video_mode == 0 && is_workable(keycode,
-			(int *){61, 45, 65, 68, 87, 83, 81, 69, 0}))
+			(int []){65451, 65453, 97, 100, 115, 119, 113, 101, 112}))
 	{
 		increase_decrease(keycode, fdf);
 		mlx_clear_window(fdf->fdf->mlx_ptr, fdf->fdf->win_ptr);

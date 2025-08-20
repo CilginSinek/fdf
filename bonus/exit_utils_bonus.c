@@ -14,6 +14,8 @@
 
 void	free_utils(t_fdf *tmp)
 {
+	if (!tmp)
+		return ;
 	if (tmp->projection)
 		free(tmp->projection);
 	if (tmp->offset_x)
@@ -26,52 +28,77 @@ void	free_utils(t_fdf *tmp)
 		free(tmp->rotation);
 }
 
+static void	free_map(t_fdf_bonus **fdf)
+{
+	int	i;
+
+	if (!fdf || !(*fdf) || !(*fdf)->fdf)
+		return ;
+	i = 0;
+	while (i < (*fdf)->fdf->height && (*fdf)->fdf->map[i])
+		free((*fdf)->fdf->map[i++]);
+	free((*fdf)->fdf->map);
+	(*fdf)->fdf->map = NULL;
+}
+
 static void	free_maps(t_fdf_bonus *fdf)
 {
-	int			i;
+	t_fdf_bonus	*tmp;
+	t_fdf		*first_fdf;
 
-	i = 0;
+	if (!fdf)
+		return ;
+	first_fdf = fdf->fdf;
 	while (fdf)
 	{
-		if (fdf->fdf)
+		if (fdf->fdf && fdf->fdf == first_fdf)
 		{
 			if (fdf->fdf->map)
-			{
-				while (i < fdf->fdf->height)
-					free(fdf->fdf->map[i++]);
-				free(fdf->fdf->map);
-				fdf->fdf->map = NULL;
-			}
+				free_map(&fdf);
 			if (fdf->fdf->img)
 			{
-				mlx_destroy_image(fdf->fdf->mlx_ptr, fdf->fdf->img->img);
 				free(fdf->fdf->img);
 				fdf->fdf->img = NULL;
 			}
 			free(fdf->fdf);
+			first_fdf = NULL;
 		}
+		tmp = fdf;
 		fdf = fdf->next_frame;
+		free(tmp);
 	}
 }
 
-void	free_mlx(t_fdf_bonus *fdf)
+void	free_mlx_and_images(t_fdf_bonus *fdf)
 {
-	if (fdf->fdf->mlx_ptr)
+	t_fdf_bonus	*current;
+
+	current = fdf;
+	while (current)
+	{
+		if (current->fdf && current->fdf->img
+			&& current->fdf->img->img && current->fdf->mlx_ptr)
+		{
+			mlx_destroy_image(current->fdf->mlx_ptr, current->fdf->img->img);
+			current->fdf->img->img = NULL;
+		}
+		current = current->next_frame;
+	}
+	if (fdf && fdf->fdf && fdf->fdf->mlx_ptr)
 	{
 		if (fdf->fdf->win_ptr)
 			mlx_destroy_window(fdf->fdf->mlx_ptr, fdf->fdf->win_ptr);
 		mlx_destroy_display(fdf->fdf->mlx_ptr);
-		free(fdf->fdf->mlx_ptr);
-		fdf->fdf->mlx_ptr = NULL;
-		fdf->fdf->mlx_ptr = NULL;
 	}
 }
 
 int	close_window(t_fdf_bonus *fdf)
 {
+	if (!fdf)
+		exit(0);
 	free_utils(fdf->fdf);
+	free_mlx_and_images(fdf);
 	free_maps(fdf);
-	free_mlx(fdf);
 	if (fdf->video_mode)
 		free(fdf->video_mode);
 	exit(0);

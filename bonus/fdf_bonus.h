@@ -79,7 +79,8 @@ int		set_map_line(char *line, t_point *point,
 			int y, int (*get_color)(char *));
 int		read_map_file(const char *filename, t_fdf *fdf);
 void	clear_frames(t_fdf_bonus **fdf);
-int		create_first_frame(t_fdf_bonus *current_fdf, int *fd, char **line);
+int		create_first_frame(const char *filename, t_fdf_bonus *current_fdf,
+			int *fd, char **line);
 int		create_next_frame(t_fdf_bonus **current);
 void	set_horizon(t_fdf_bonus *fdf);
 int		read_video_file(const char *filename, t_fdf_bonus *fdf);

@@ -41,7 +41,7 @@ void	init_fdf_bonus(t_fdf_bonus *fdf)
 	fdf->fdf->width = 0;
 	fdf->fdf->rotation = ft_calloc(1, sizeof(int));
 	fdf->next_frame = NULL;
-	fdf->projection = ft_calloc(1, sizeof(int));
+	fdf->fdf->projection = ft_calloc(1, sizeof(int));
 	fdf->video_mode = ft_calloc(1, sizeof(int));
 	fdf->fdf->rotation = ft_calloc(1, sizeof(int));
 	fdf->fdf->offset_x = ft_calloc(1, sizeof(int));
@@ -99,7 +99,7 @@ int	main(int argc, char *argv[])
 	init_keyhooks(fdf);
 	set_horizon(fdf);
 	init_vision(fdf);
-	mlx_loop_hook(fdf->fdf->mlx_ptr, start_vision, (void *){fdf, NULL});
+	mlx_loop_hook(fdf->fdf->mlx_ptr, start_vision, fdf);
 	mlx_loop(fdf->fdf->mlx_ptr);
 	close_window(fdf);
 	return (0);

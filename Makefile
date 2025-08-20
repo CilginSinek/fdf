@@ -1,7 +1,7 @@
 NAME=fdf
 NAME_BONUS=fdf_bonus
 SRC= mandatory/main.c mandatory/utils.c mandatory/filehandler.c mandatory/drawmap.c mandatory/exit_utils.c
-SRC_BONUS= /bonus/exit_utils_bonus.c /bonus/fdf_bonus.h /bonus/filehandler_bonus.c /bonus/handlevision_bonus.c /bonus/imagehandler_bonus.c /bonus/key_utils.c /bonus/main_bonus.c /bonus/utils1_bonus.c /bonus/utils_bonus.c /bonus/video_handle_bonus.c /bonus/video_helper.c
+SRC_BONUS= bonus/exit_utils_bonus.c bonus/filehandler_bonus.c bonus/handlevision_bonus.c bonus/imagehandler_bonus.c bonus/key_utils.c bonus/main_bonus.c bonus/utils1_bonus.c bonus/utils_bonus.c bonus/video_handle_bonus.c bonus/video_helper.c
 OBJ=$(SRC:.c=.o)
 OBJ_BONUS=$(SRC_BONUS:.c=.o)
 CC=cc

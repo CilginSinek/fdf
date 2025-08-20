@@ -54,7 +54,7 @@ int	start_vision(t_fdf_bonus *fdf, void *r)
 	t_fdf_bonus	*tmp;
 	char		restart;
 
-	restart = (char)r;
+	restart = (char)(intptr_t)r;
 	tmp = fdf;
 	if (*(tmp->video_mode) == 1)
 		animation(fdf, restart);

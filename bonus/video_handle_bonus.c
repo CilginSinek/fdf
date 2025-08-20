@@ -49,8 +49,8 @@ static int	video_while(char **line, t_fdf_bonus **current_fdf,
 		*line = get_next_line(fd);
 		return ('c');
 	}
-	if (read_map_while(current_fdf->fdf, *line, fd, &tmp) == -1)
-		return (clear_frames(&fdf), -1);
+	if (read_map_while((*current_fdf)->fdf, *line, fd, &tmp) == -1)
+		return (clear_frames(fdf), -1);
 	*line = get_next_line(fd);
 	return (0);
 }
@@ -62,7 +62,7 @@ int	read_video_file(const char *filename, t_fdf_bonus *fdf)
 	t_fdf_bonus	*current_fdf;
 
 	current_fdf = fdf;
-	if (create_first_frame(current_fdf, &fd, &line) < 0)
+	if (create_first_frame(filename, current_fdf, &fd, &line) < 0)
 		return (-1);
 	while (line)
 		if (video_while(&line, &current_fdf, fd, &fdf) < 0)

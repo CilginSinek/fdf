@@ -59,7 +59,7 @@ static t_point	project_point(t_point point, t_fdf *fdf)
 	theta = (*fdf->rotation) * (M_PI / 180.0);
 	rot_x = point.x * cos(theta) - point.y * sin(theta);
 	rot_y = point.x * sin(theta) + point.y * cos(theta);
-	if (fdf->fdf->projection == 0)
+	if (*fdf->projection == 0)
 	{
 		projected.x = (rot_x - rot_y) * cos(30 * (M_PI / 180))
 			* *fdf->scale + *fdf->offset_x;

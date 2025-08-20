@@ -39,7 +39,8 @@ void	clear_frames(t_fdf_bonus **fdf)
 	}
 }
 
-int	create_first_frame(t_fdf_bonus *current_fdf, int *fd, char **line)
+int	create_first_frame(const char *filename, t_fdf_bonus *current_fdf,
+	int *fd, char **line)
 {
 	*fd = open(filename, O_RDONLY);
 	if (*fd < 0)
@@ -67,7 +68,6 @@ int	create_next_frame(t_fdf_bonus **current)
 		return (-1);
 	(*current)->next_frame = new_frame;
 	new_frame->next_frame = NULL;
-	new_frame->projection = (*current)->projection;
 	new_frame->video_mode = (*current)->video_mode;
 	new_frame->fdf = (t_fdf *)calloc(1, sizeof(t_fdf));
 	if (!new_frame->fdf)
@@ -80,6 +80,7 @@ int	create_next_frame(t_fdf_bonus **current)
 	new_frame->fdf->offset_y = (*current)->fdf->offset_y;
 	new_frame->fdf->scale = (*current)->fdf->scale;
 	new_frame->fdf->rotation = (*current)->fdf->rotation;
+	new_frame->fdf->projection = (*current)->fdf->projection;
 	*current = new_frame;
 	return (0);
 }
