@@ -55,11 +55,6 @@ static void	free_maps(t_fdf_bonus *fdf)
 		{
 			if (fdf->fdf->map)
 				free_map(&fdf);
-			if (fdf->fdf->img)
-			{
-				free(fdf->fdf->img);
-				fdf->fdf->img = NULL;
-			}
 			free(fdf->fdf);
 			first_fdf = NULL;
 		}
@@ -76,11 +71,16 @@ void	free_mlx_and_images(t_fdf_bonus *fdf)
 	current = fdf;
 	while (current)
 	{
-		if (current->fdf && current->fdf->img
-			&& current->fdf->img->img && current->fdf->mlx_ptr)
+		if (current->fdf && current->fdf->img)
 		{
-			mlx_destroy_image(current->fdf->mlx_ptr, current->fdf->img->img);
-			current->fdf->img->img = NULL;
+			if (current->fdf->img->img && current->fdf->mlx_ptr)
+			{
+				mlx_destroy_image(current->fdf->mlx_ptr,
+					current->fdf->img->img);
+				current->fdf->img->img = NULL;
+			}
+			free(current->fdf->img);
+			current->fdf->img = NULL;
 		}
 		current = current->next_frame;
 	}

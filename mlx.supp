@@ -1,0 +1,93 @@
+{
+   MLX_Init_Leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:mlx_init
+}
+
+{
+   MLX_Display_Leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:*alloc
+   ...
+   fun:XOpenDisplay
+   fun:mlx_init
+}
+
+{
+   MLX_Window_Leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:*alloc
+   ...
+   fun:mlx_new_window
+}
+
+{
+   MLX_Image_Leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:*alloc
+   ...
+   fun:mlx_new_image
+}
+
+{
+   MLX_Uninitialised_Writev
+   Memcheck:Param
+   writev(vector[0])
+   fun:writev
+   obj:/usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+   obj:/usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0
+   fun:xcb_writev
+}
+
+{
+   MLX_X11_Uninitialised
+   Memcheck:Param
+   writev(vector[0])
+   fun:writev
+   ...
+   fun:_XSend
+   fun:_XReadEvents
+   fun:XWindowEvent
+   fun:mlx_int_wait_first_expose
+}
+
+{
+   MLX_X11_Display_Uninitialised
+   Memcheck:Param
+   writev(vector[0])
+   ...
+   fun:XOpenDisplay
+   fun:mlx_init
+}
+
+{
+   MLX_All_X11_Errors
+   Memcheck:Param
+   writev(vector[0])
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.*
+}
+
+{
+   MLX_All_XCB_Errors
+   Memcheck:Param
+   writev(vector[0])
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libxcb.so.*
+}
+
+{
+   MLX_General_X11_Uninitialised
+   Memcheck:Param
+   writev(vector[0])
+   fun:writev
+   obj:*libxcb*
+   obj:*libxcb*
+   fun:xcb_writev
+   obj:*libX11*
+}

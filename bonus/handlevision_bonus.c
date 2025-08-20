@@ -17,9 +17,15 @@ int	init_vision(t_fdf_bonus *fdf)
 	t_fdf_bonus	*tmp;
 
 	tmp = fdf;
-	while (tmp)
+	while (tmp != NULL)
 	{
-		tmp->fdf->img = (t_img *)malloc(sizeof(t_img));
+		if (tmp->fdf->img)
+		{
+			if (tmp->fdf->img->img && tmp->fdf->mlx_ptr)
+				mlx_destroy_image(tmp->fdf->mlx_ptr, tmp->fdf->img->img);
+			free(tmp->fdf->img);
+		}
+		tmp->fdf->img = (t_img *)ft_calloc(1, sizeof(t_img));
 		if (!tmp->fdf->img)
 			close_window(fdf);
 		tmp->fdf->img->img = mlx_new_image(tmp->fdf->mlx_ptr, 1200, 800);

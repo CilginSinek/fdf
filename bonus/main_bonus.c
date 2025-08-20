@@ -43,7 +43,6 @@ void	init_fdf_bonus(t_fdf_bonus *fdf)
 	fdf->next_frame = NULL;
 	fdf->fdf->projection = ft_calloc(1, sizeof(int));
 	fdf->video_mode = ft_calloc(1, sizeof(int));
-	fdf->fdf->rotation = ft_calloc(1, sizeof(int));
 	fdf->fdf->offset_x = ft_calloc(1, sizeof(int));
 	fdf->fdf->offset_y = ft_calloc(1, sizeof(int));
 	fdf->fdf->scale = ft_calloc(1, sizeof(int));
@@ -59,21 +58,30 @@ void	init_fdf_bonus(t_fdf_bonus *fdf)
 	*(fdf->fdf->scale) = 1;
 	*(fdf->fdf->projection) = 0;
 	*(fdf->video_mode) = 0;
+	mlx_string_put(fdf->fdf->mlx_ptr, fdf->fdf->win_ptr,
+		600, 400, 0xFFFFFF, "Loading...");
 }
 
 static int	expose_hook(t_fdf_bonus *vars)
 {
 	mlx_clear_window(vars->fdf->mlx_ptr, vars->fdf->win_ptr);
 	init_vision(vars);
-	start_vision(vars, (void *)1);
+	if (*(vars->video_mode) == 0)
+		start_vision(vars, (void *)1);
 	return (0);
 }
 
-void	init_keyhooks(t_fdf_bonus *fdf)
+static void	init_keyhooks_system(t_fdf_bonus *fdf)
 {
 	mlx_hook(fdf->fdf->win_ptr, 17, 0, close_window, fdf);
 	mlx_hook(fdf->fdf->win_ptr, 2, 1L << 0, key_press, fdf);
 	mlx_expose_hook(fdf->fdf->win_ptr, expose_hook, fdf);
+	set_horizon(fdf);
+	init_vision(fdf);
+	if (*(fdf->video_mode) == 1)
+		mlx_loop_hook(fdf->fdf->mlx_ptr, start_vision, fdf);
+	else
+		start_vision(fdf, (void *)1);
 }
 
 int	main(int argc, char *argv[])
@@ -96,10 +104,7 @@ int	main(int argc, char *argv[])
 	init_fdf_bonus(fdf);
 	if (read_files(fdf, argv[1]) < 0)
 		return (1);
-	init_keyhooks(fdf);
-	set_horizon(fdf);
-	init_vision(fdf);
-	mlx_loop_hook(fdf->fdf->mlx_ptr, start_vision, fdf);
+	init_keyhooks_system(fdf);
 	mlx_loop(fdf->fdf->mlx_ptr);
 	close_window(fdf);
 	return (0);
