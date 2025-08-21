@@ -17,6 +17,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <string.h>
+# include <sys/time.h>
 # include <stdio.h>
 
 typedef struct s_point

@@ -40,19 +40,31 @@ int	init_vision(t_fdf_bonus *fdf)
 
 static void	animation(t_fdf_bonus *fdf, char restart)
 {
-	static t_fdf_bonus	*current_frame;
+	static t_fdf_bonus		*current_frame;
+	static struct timeval	last_time = {0, 0};
+	struct timeval			current_time;
+	long					delta_microseconds;
 
 	if (!current_frame || restart)
+	{
 		current_frame = fdf;
-	mlx_clear_window(current_frame->fdf->mlx_ptr, current_frame->fdf->win_ptr);
-	mlx_put_image_to_window(current_frame->fdf->mlx_ptr,
-		current_frame->fdf->win_ptr, current_frame->fdf->img->img, 0, 0);
-	mlx_do_sync(current_frame->fdf->mlx_ptr);
-	usleep(1000000 / 15);
-	if (current_frame->next_frame)
-		current_frame = current_frame->next_frame;
-	else
-		current_frame = fdf;
+		return (gettimeofday(&last_time, NULL), void);
+	}
+	gettimeofday(&current_time, NULL);
+	delta_microseconds = (current_time.tv_sec - last_time.tv_sec
+			) * 1000000 + (current_time.tv_usec - last_time.tv_usec);
+	if (delta_microseconds >= 66667)
+	{
+		mlx_clear_window(current_frame->fdf->mlx_ptr,
+			current_frame->fdf->win_ptr);
+		mlx_put_image_to_window(current_frame->fdf->mlx_ptr,
+			current_frame->fdf->win_ptr, current_frame->fdf->img->img, 0, 0);
+		if (current_frame->next_frame)
+			current_frame = current_frame->next_frame;
+		else
+			current_frame = fdf;
+		last_time = current_time;
+	}
 }
 
 int	start_vision(t_fdf_bonus *fdf, void *r)
