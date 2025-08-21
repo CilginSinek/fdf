@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   key_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:42:28 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/20 17:42:28 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/21 09:08:38 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_bonus.h"
 
-void	increase_decrease(int keycode, t_fdf_bonus *fdf)
+static void	increase_decrease(int keycode, t_fdf_bonus *fdf)
 {
 	if (keycode == 65451)
 		*(fdf->fdf->scale) += 1;

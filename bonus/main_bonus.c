@@ -6,13 +6,13 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 06:30:10 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/21 08:10:00 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/21 09:09:59 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_bonus.h"
 
-int	read_files(t_fdf_bonus *fdf, const char *filename)
+static int	read_files(t_fdf_bonus *fdf, const char *filename)
 {
 	if (strstr(filename, ".fdfs") != NULL)
 	{
@@ -35,7 +35,7 @@ int	read_files(t_fdf_bonus *fdf, const char *filename)
 	}
 }
 
-void	init_fdf_bonus(t_fdf_bonus *fdf, int p)
+static void	init_fdf_bonus(t_fdf_bonus *fdf, int p)
 {
 	fdf->fdf->height = 0;
 	fdf->fdf->width = 0;

@@ -6,13 +6,13 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:42:32 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/21 09:05:53 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/21 09:09:04 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_bonus.h"
 
-void	free_utils(t_fdf *tmp)
+static void	free_utils(t_fdf *tmp)
 {
 	if (!tmp)
 		return ;
@@ -66,7 +66,7 @@ static void	free_maps(t_fdf_bonus *fdf)
 	}
 }
 
-void	free_mlx_and_images(t_fdf_bonus *fdf)
+static void	free_mlx_and_images(t_fdf_bonus *fdf)
 {
 	free_images(fdf);
 	if (fdf && fdf->fdf && fdf->fdf->mlx_ptr)
