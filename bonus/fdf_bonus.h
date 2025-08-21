@@ -6,7 +6,7 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:00:47 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/21 10:04:59 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/21 10:30:10 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <math.h>
 # include <string.h>
 # include <sys/time.h>
-# include <stdio.h>
 
 typedef struct s_point
 {
