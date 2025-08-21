@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlevision_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 08:07:08 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/20 16:19:17 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/21 07:58:58 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	animation(t_fdf_bonus *fdf, char restart)
 	if (!current_frame || restart)
 	{
 		current_frame = fdf;
-		return (gettimeofday(&last_time, NULL), void);
+		gettimeofday(&last_time, NULL);
 	}
 	gettimeofday(&current_time, NULL);
 	delta_microseconds = (current_time.tv_sec - last_time.tv_sec

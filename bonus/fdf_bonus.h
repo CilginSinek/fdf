@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:00:47 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/20 16:05:56 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/21 09:06:17 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_fdf_bonus
 	struct s_fdf_bonus	*next_frame;
 }	t_fdf_bonus;
 
+void	free_images(t_fdf_bonus *fdf);
 int		close_window(t_fdf_bonus *fdf);
 int		key_press(int keycode, void *param);
 int		ep(char *message, t_fdf *fdf, void **free_list, int fd);
