@@ -6,7 +6,7 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:00:47 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/21 09:06:17 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/21 10:04:59 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,5 @@ void	set_horizon(t_fdf_bonus *fdf);
 int		read_video_file(const char *filename, t_fdf_bonus *fdf);
 void	draw_map(t_fdf *fdf);
 int		init_vision(t_fdf_bonus *fdf);
-int		start_vision(t_fdf_bonus *fdf, void *r);
+int		start_vision(t_fdf_bonus *fdf);
 #endif

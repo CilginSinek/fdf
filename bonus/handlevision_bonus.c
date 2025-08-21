@@ -6,7 +6,7 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 08:07:08 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/21 07:58:58 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/21 10:09:59 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ int	init_vision(t_fdf_bonus *fdf)
 	return (1);
 }
 
-static void	animation(t_fdf_bonus *fdf, char restart)
+static void	animation(t_fdf_bonus *fdf)
 {
 	static t_fdf_bonus		*current_frame;
 	static struct timeval	last_time = {0, 0};
 	struct timeval			current_time;
 	long					delta_microseconds;
 
-	if (!current_frame || restart)
+	if (!current_frame)
 	{
 		current_frame = fdf;
 		gettimeofday(&last_time, NULL);
@@ -67,15 +67,13 @@ static void	animation(t_fdf_bonus *fdf, char restart)
 	}
 }
 
-int	start_vision(t_fdf_bonus *fdf, void *r)
+int	start_vision(t_fdf_bonus *fdf)
 {
 	t_fdf_bonus	*tmp;
-	char		restart;
 
-	restart = (char)(intptr_t)r;
 	tmp = fdf;
 	if (*(tmp->video_mode) == 1)
-		animation(fdf, restart);
+		animation(fdf);
 	else
 	{
 		mlx_clear_window(fdf->fdf->mlx_ptr, fdf->fdf->win_ptr);

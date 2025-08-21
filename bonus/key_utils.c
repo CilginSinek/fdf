@@ -6,7 +6,7 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:42:28 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/21 09:08:38 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/21 10:10:23 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	key_press(int keycode, void *param)
 		increase_decrease(keycode, fdf);
 		mlx_clear_window(fdf->fdf->mlx_ptr, fdf->fdf->win_ptr);
 		init_vision(fdf);
-		start_vision(fdf, (void *)1);
+		start_vision(fdf);
 	}
 	return (0);
 }

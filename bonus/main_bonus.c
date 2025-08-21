@@ -6,7 +6,7 @@
 /*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 06:30:10 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/21 09:09:59 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/21 10:09:16 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	expose_hook(t_fdf_bonus *vars)
 	mlx_clear_window(vars->fdf->mlx_ptr, vars->fdf->win_ptr);
 	init_vision(vars);
 	if (*(vars->video_mode) == 0)
-		start_vision(vars, (void *)1);
+		start_vision(vars);
 	return (0);
 }
 
@@ -81,7 +81,7 @@ static void	init_keyhooks_system(t_fdf_bonus *fdf)
 	if (*(fdf->video_mode) == 1)
 		mlx_loop_hook(fdf->fdf->mlx_ptr, start_vision, fdf);
 	else
-		start_vision(fdf, (void *)1);
+		start_vision(fdf);
 }
 
 int	main(int argc, char *argv[])
