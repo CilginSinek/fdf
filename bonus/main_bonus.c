@@ -24,7 +24,7 @@ static int	read_files(t_fdf_bonus *fdf, const char *filename)
 	else if (strstr(filename, ".fdf") != NULL)
 	{
 		*(fdf->video_mode) = 0;
-		if (read_map_file(filename, fdf->fdf) == 1)
+		if (read_map_file(filename, fdf->fdf) < 0)
 			return (close_window(fdf), 0);
 		return (1);
 	}
@@ -105,7 +105,7 @@ int	main(int argc, char *argv[])
 		init_fdf_bonus(fdf, ft_atoi(argv[2]));
 	else
 		init_fdf_bonus(fdf, 0);
-	if (read_files(fdf, argv[1]) < 0)
+	if (read_files(fdf, argv[1]) == 0)
 		return (1);
 	init_keyhooks_system(fdf);
 	mlx_loop(fdf->fdf->mlx_ptr);

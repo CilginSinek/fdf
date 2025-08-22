@@ -29,7 +29,7 @@ int	ep(char *message, t_fdf *fdf, void **free_list, int fd)
 	ft_putstr_fd(message, 2);
 	if (fdf != NULL && fdf->map != NULL)
 	{
-		if (*fdf->map)
+		if (fdf->map)
 		{
 			while (i < fdf->height)
 			{
@@ -37,13 +37,16 @@ int	ep(char *message, t_fdf *fdf, void **free_list, int fd)
 				i++;
 			}
 			free(fdf->map);
+			fdf->map = NULL;
 		}
 	}
 	if (free_list[0] != NULL)
 		free(free_list[0]);
 	if (free_list[1] != NULL)
 		free(free_list[1]);
-	close(fd);
+	if (fd >= 0)
+		close(fd);
+	get_next_line(-1);
 	return (-1);
 }
 

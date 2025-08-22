@@ -47,22 +47,26 @@ static void	free_map(t_fdf_bonus **fdf)
 
 static void	free_maps(t_fdf_bonus *fdf)
 {
-	t_fdf_bonus	*tmp;
+	t_fdf_bonus	*next;
+	t_fdf_bonus	*current;
 
 	if (!fdf)
 		return ;
 	while (fdf)
 	{
-		if (fdf->fdf && fdf->fdf->map)
+		next = fdf->next_frame;
+		if (fdf->fdf)
 		{
 			if (fdf->fdf->map)
-				free_map(&fdf);
+			{
+				current = fdf;
+				free_map(&current);
+			}
 			free(fdf->fdf);
 			fdf->fdf = NULL;
 		}
-		tmp = fdf;
-		fdf = fdf->next_frame;
-		free(tmp);
+		free(fdf);
+		fdf = next;
 	}
 }
 
