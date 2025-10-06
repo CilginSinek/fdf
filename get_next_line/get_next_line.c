@@ -98,7 +98,11 @@ char	*get_next_line(int fd)
 	static char	*cage;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
+	{
+		if (cage)
+			free(cage);
 		return (NULL);
+	}
 	cage = append_cage(fd, cage);
 	if (cage == NULL)
 		return (NULL);

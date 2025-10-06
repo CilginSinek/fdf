@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   key_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:42:28 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/20 17:42:28 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/23 15:10:09 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_bonus.h"
 
-void	increase_decrease(int keycode, t_fdf_bonus *fdf)
+static void	increase_decrease(int keycode, t_fdf_bonus *fdf)
 {
-	if (keycode == 65451)
+	if (keycode == 110)
 		*(fdf->fdf->scale) += 1;
-	else if (keycode == 65453)
+	else if (keycode == 109)
 		*(fdf->fdf->scale) -= 1;
 	else if (keycode == 97)
 		*(fdf->fdf->offset_x) += 1;
@@ -60,12 +60,12 @@ int	key_press(int keycode, void *param)
 	if (keycode == 65307)
 		close_window(fdf);
 	if (*fdf->video_mode == 0 && is_workable(keycode,
-			(int []){65451, 65453, 97, 100, 115, 119, 113, 101, 112}))
+			(int []){110, 109, 97, 100, 115, 119, 113, 101, 112}))
 	{
 		increase_decrease(keycode, fdf);
 		mlx_clear_window(fdf->fdf->mlx_ptr, fdf->fdf->win_ptr);
 		init_vision(fdf);
-		start_vision(fdf, (void *)1);
+		start_vision(fdf);
 	}
 	return (0);
 }

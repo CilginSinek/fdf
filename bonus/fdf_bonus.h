@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:00:47 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/20 16:05:56 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/21 10:30:10 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <math.h>
 # include <string.h>
 # include <sys/time.h>
-# include <stdio.h>
 
 typedef struct s_point
 {
@@ -69,6 +68,7 @@ typedef struct s_fdf_bonus
 	struct s_fdf_bonus	*next_frame;
 }	t_fdf_bonus;
 
+void	free_images(t_fdf_bonus *fdf);
 int		close_window(t_fdf_bonus *fdf);
 int		key_press(int keycode, void *param);
 int		ep(char *message, t_fdf *fdf, void **free_list, int fd);
@@ -87,5 +87,5 @@ void	set_horizon(t_fdf_bonus *fdf);
 int		read_video_file(const char *filename, t_fdf_bonus *fdf);
 void	draw_map(t_fdf *fdf);
 int		init_vision(t_fdf_bonus *fdf);
-int		start_vision(t_fdf_bonus *fdf, void *r);
+int		start_vision(t_fdf_bonus *fdf);
 #endif

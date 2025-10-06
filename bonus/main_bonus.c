@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 06:30:10 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/20 16:15:31 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/21 10:09:16 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_bonus.h"
 
-int	read_files(t_fdf_bonus *fdf, const char *filename)
+static int	read_files(t_fdf_bonus *fdf, const char *filename)
 {
 	if (strstr(filename, ".fdfs") != NULL)
 	{
@@ -24,7 +24,7 @@ int	read_files(t_fdf_bonus *fdf, const char *filename)
 	else if (strstr(filename, ".fdf") != NULL)
 	{
 		*(fdf->video_mode) = 0;
-		if (read_map_file(filename, fdf->fdf) == 1)
+		if (read_map_file(filename, fdf->fdf) < 0)
 			return (close_window(fdf), 0);
 		return (1);
 	}
@@ -35,7 +35,7 @@ int	read_files(t_fdf_bonus *fdf, const char *filename)
 	}
 }
 
-void	init_fdf_bonus(t_fdf_bonus *fdf, int p)
+static void	init_fdf_bonus(t_fdf_bonus *fdf, int p)
 {
 	fdf->fdf->height = 0;
 	fdf->fdf->width = 0;
@@ -67,7 +67,7 @@ static int	expose_hook(t_fdf_bonus *vars)
 	mlx_clear_window(vars->fdf->mlx_ptr, vars->fdf->win_ptr);
 	init_vision(vars);
 	if (*(vars->video_mode) == 0)
-		start_vision(vars, (void *)1);
+		start_vision(vars);
 	return (0);
 }
 
@@ -81,7 +81,7 @@ static void	init_keyhooks_system(t_fdf_bonus *fdf)
 	if (*(fdf->video_mode) == 1)
 		mlx_loop_hook(fdf->fdf->mlx_ptr, start_vision, fdf);
 	else
-		start_vision(fdf, (void *)1);
+		start_vision(fdf);
 }
 
 int	main(int argc, char *argv[])
@@ -105,7 +105,7 @@ int	main(int argc, char *argv[])
 		init_fdf_bonus(fdf, ft_atoi(argv[2]));
 	else
 		init_fdf_bonus(fdf, 0);
-	if (read_files(fdf, argv[1]) < 0)
+	if (read_files(fdf, argv[1]) == 0)
 		return (1);
 	init_keyhooks_system(fdf);
 	mlx_loop(fdf->fdf->mlx_ptr);

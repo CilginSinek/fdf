@@ -16,7 +16,7 @@ static int	read_map_while(t_fdf *fdf, char *line, int fd, t_point **points)
 {
 	if (fdf->width != ft_get_line_length(line))
 		return (ep("Error: Incorrect line lengths in map file.\n",
-				fdf, (void *[]){points, line}, fd));
+				fdf, (void *[]){NULL, line}, fd));
 	*points = (t_point *)ft_calloc(fdf->width + 1, sizeof(t_point));
 	if (!*points)
 		return (ep("Error: Memory allocation failed.\n",

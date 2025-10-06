@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iduman <iduman@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: iduman <iduman@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:42:32 by iduman            #+#    #+#             */
-/*   Updated: 2025/08/20 17:42:32 by iduman           ###   ########.fr       */
+/*   Updated: 2025/08/21 09:09:04 by iduman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_bonus.h"
 
-void	free_utils(t_fdf *tmp)
+static void	free_utils(t_fdf *tmp)
 {
 	if (!tmp)
 		return ;
@@ -36,71 +36,70 @@ static void	free_map(t_fdf_bonus **fdf)
 		return ;
 	i = 0;
 	while (i < (*fdf)->fdf->height && (*fdf)->fdf->map[i])
-		free((*fdf)->fdf->map[i++]);
+	{
+		free((*fdf)->fdf->map[i]);
+		(*fdf)->fdf->map[i] = NULL;
+		i++;
+	}
 	free((*fdf)->fdf->map);
 	(*fdf)->fdf->map = NULL;
 }
 
 static void	free_maps(t_fdf_bonus *fdf)
 {
-	t_fdf_bonus	*tmp;
-	t_fdf		*first_fdf;
+	t_fdf_bonus	*next;
+	t_fdf_bonus	*current;
 
 	if (!fdf)
 		return ;
-	first_fdf = fdf->fdf;
 	while (fdf)
 	{
-		if (fdf->fdf && fdf->fdf == first_fdf)
+		next = fdf->next_frame;
+		if (fdf->fdf)
 		{
 			if (fdf->fdf->map)
-				free_map(&fdf);
+			{
+				current = fdf;
+				free_map(&current);
+			}
 			free(fdf->fdf);
-			first_fdf = NULL;
+			fdf->fdf = NULL;
 		}
-		tmp = fdf;
-		fdf = fdf->next_frame;
-		free(tmp);
+		free(fdf);
+		fdf = next;
 	}
 }
 
-void	free_mlx_and_images(t_fdf_bonus *fdf)
+static void	free_mlx_and_images(t_fdf_bonus *fdf)
 {
-	t_fdf_bonus	*current;
-
-	current = fdf;
-	while (current)
-	{
-		if (current->fdf && current->fdf->img)
-		{
-			if (current->fdf->img->img && current->fdf->mlx_ptr)
-			{
-				mlx_destroy_image(current->fdf->mlx_ptr,
-					current->fdf->img->img);
-				current->fdf->img->img = NULL;
-			}
-			free(current->fdf->img);
-			current->fdf->img = NULL;
-		}
-		current = current->next_frame;
-	}
+	free_images(fdf);
 	if (fdf && fdf->fdf && fdf->fdf->mlx_ptr)
 	{
 		if (fdf->fdf->win_ptr)
+		{
 			mlx_destroy_window(fdf->fdf->mlx_ptr, fdf->fdf->win_ptr);
+			fdf->fdf->win_ptr = NULL;
+		}
 		mlx_destroy_display(fdf->fdf->mlx_ptr);
+		free(fdf->fdf->mlx_ptr);
+		fdf->fdf->mlx_ptr = NULL;
 	}
 }
 
 int	close_window(t_fdf_bonus *fdf)
 {
-	if (!fdf)
+	static int	first_call = 0;
+	int			*video_mode_ptr;
+
+	if (!fdf || first_call)
 		exit(0);
+	first_call = 1;
+	video_mode_ptr = fdf->video_mode;
 	free_utils(fdf->fdf);
 	free_mlx_and_images(fdf);
 	free_maps(fdf);
-	if (fdf->video_mode)
-		free(fdf->video_mode);
+	if (video_mode_ptr)
+		free(video_mode_ptr);
 	exit(0);
 	return (0);
 }
