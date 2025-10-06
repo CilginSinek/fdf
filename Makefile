@@ -25,6 +25,10 @@ $(NAME): $(OBJ) $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX)
 	$(CC) $(CFLAGS) -o $@ $^  $(LIBFT) $(GET_NEXT_LINE) $(MINILIBX) -lm -lX11 -lXext
 
 $(MINILIBX):
+	@if [ ! -d "$(MINILIBXDIR)" ]; then \
+		echo "Cloning minilibx-linux..."; \
+		git clone https://github.com/42Paris/minilibx-linux.git $(MINILIBXDIR); \
+	fi
 	make -C $(MINILIBXDIR)
 
 $(LIBFT):
@@ -45,6 +49,9 @@ fclean: clean
 	rm -f $(NAME) $(NAME_BONUS)
 	make -C $(LIBFTDIR) fclean
 	make -C $(GET_NEXT_LINE_DIR) fclean
+	@if [ -d "$(MINILIBXDIR)" ]; then \
+		make -C $(MINILIBXDIR) clean; \
+	fi
 
 normlibs:
 	find $(LIBFTDIR) -type f -print0 | xargs -0 norminette
