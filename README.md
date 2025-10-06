@@ -521,7 +521,7 @@ This project is part of the 42 School curriculum and is for educational purposes
 
 ### 👨‍💻 Author
 
-**İsmail Duman** - [@CilginSinek](https://github.com/CilginSinek)
+**iduman** - [@CilginSinek](https://github.com/CilginSinek)
 
 ### 🙏 Acknowledgments
 
